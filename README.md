@@ -4,7 +4,7 @@
 
 This repo has various updates to later versions & a more organized file structure.
 
-A bonus mini-site with [Live Demos](https://sondro.github.io/C2D-Web/)
+Responsive mini-site with [Live Demos](https://sondro.github.io/C2D-Web/)
 
 ### Issues:
 
