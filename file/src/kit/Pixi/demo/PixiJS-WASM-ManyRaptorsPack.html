@@ -55,10 +55,10 @@
 var loaded = false;
 
 function stopSpinner(){
-    document.getElementsByClassName("loader")[0].style.animation = 'spin 1s linear 1';
+    document.getElementsByClassName("loader")[0].style.animation = 'spin 2s ease-out 1';
 }
 
-window.addEventListener('load', function() { () => setTimeout(stopSpinner(), 600000); }, false);
+document.onreadystatechange = function () { if (document.readyState == "complete") { () => setTimeout(stopSpinner(), 600000); } }
 
 /*
 
