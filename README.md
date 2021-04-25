@@ -1,4 +1,4 @@
-# []CREATURE 2D - Web(https://sondro.github.io/C2D-Web/)
+# [CREATURE 2D - Web](https://sondro.github.io/C2D-Web/)
 
 ## Updates
 
