@@ -8,16 +8,18 @@ A bonus mini-site with [Live Demos](https://sondro.github.io/C2D-Web/)
 
 ### Issues:
 
-- PIXI.JS: Spy Girl Skin Swap :: doesn't swap.
-- PIXI.JS: PIXI.JS: WASM Raptor Pack :: mesh fails to load (array issues). 
-- PIXI.JS: WASM Many Raptors Pack ::  mesh fails to load (array issues).
+- **PIXI.JS: Spy Girl Skin Swap ::** doesn't swap.
+- **PIXI.JS: PIXI.JS: WASM Raptor Pack ::** mesh fails to load (array issues). 
+- **PIXI.JS: WASM Many Raptors Pack ::**  mesh fails to load (array issues).
 
-- PHASER3.JS: Fox :: untextured (pack issues?).
-- PHASER3.JS: Flamingo :: untextured (pack issues?).
-- PHASER3.JS: Fox-Bat-Horseman Group :: Fox is untextured (pack issues?).
-- PHASER3.JS: Composer :: untextured (pack issues?).
+- **PHASER3.JS: Fox ::** untextured (pack issues?).
+- **PHASER3.JS: Flamingo ::** untextured (pack issues?).
+- **PHASER3.JS: Fox-Bat-Horseman Group ::** Fox is untextured (pack issues?).
+- **PHASER3.JS: Composer ::** untextured (pack issues?).
 
-- PHASER2.JS: Raptor Pack ::  mesh fails from obsolete texture data (array issues?).
+- **PHASER2.JS: Raptor Pack ::**  mesh fails from obsolete texture data (array issues?).
+
+- **All WASM demos ::** requires creature-wasm.wasm in the same folder as the html (change module path?).
 
 
 ## ReadMe
