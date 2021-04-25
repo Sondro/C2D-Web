@@ -8,7 +8,7 @@ Responsive mini-site with [Live Demos](https://sondro.github.io/C2D-Web/)
 
 ### Issues:
 
-- **PIXI.JS: Spy Girl Skin Swap ::** doesn't swap.
+- **PIXI.JS: Spy Girl Skin Swap ::** doesn't swap (null values).
 - **PIXI.JS: PIXI.JS: WASM Raptor Pack ::** mesh fails to load (array issues). 
 - **PIXI.JS: WASM Many Raptors Pack ::**  mesh fails to load (array issues).
 
@@ -17,13 +17,13 @@ Responsive mini-site with [Live Demos](https://sondro.github.io/C2D-Web/)
 - **PHASER3.JS: Fox-Bat-Horseman Group ::** Fox is untextured (pack issues?).
 - **PHASER3.JS: Composer ::** untextured (pack issues?).
 
-- **PHASER2.JS: Raptor Pack ::** mesh fails from obsolete texture data (array issues?).
+- **PHASER2.JS: Raptor Pack ::** mesh fails - PIXI.Texture.from is obsolete (data issues?).
 
 - **All WASM demos ::** requires creature-wasm.wasm in the same folder as the html (change module path?).
 
 
-## Dev Notes
-Creature Runtimes for Javascript & WebAssembly based Frameworks.
+## Dev Notes:
+Creature Runtimes for Javascript & WebAssembly Frameworks.
 
 The following frameworks are supported:
 
@@ -46,13 +46,13 @@ Download the samples and more **[here](https://kestrelmoon.com/creaturedocs/Anim
 ![Alt text](https://github.com/kestrelm/Creature_WebGL/blob/master/babylonjs.png)
 Live Babylon JS Demo is **[here](https://creature.kestrelmoon.com/WebDemo/Babylon-Demo.html)**.
 
-## Live Raptor Mark Demo
+### Live Raptor Mark Demo:
 
 **Raptor Mark** is a demonstration of what the **Creature WebGL** plugin is capable of. 
 
 ![Alt text](https://github.com/kestrelm/Creature_WebGL/blob/master/logo1.png)
 
-### Regular JS Demo
+### Regular JS Demo:
 
 This demo shows **30 fully mesh deforming raptor characters** running across the screen. This demo is using the **CreaturePack Web** format to deliver results that have high performance, great quality and yet compact in delivery size.
 
@@ -60,7 +60,7 @@ This demo shows **30 fully mesh deforming raptor characters** running across the
 
 View the Live demo **[here](https://kestrelmoon.com/creature/WebDemo/raptor_mark.html)** .
 
-### WebAssembly Demo
+### WebAssembly Demo:
 
 Unleash the power of high performance **Web Assembly** with the new **CreaturePack WebAssembly** runtimes!
 
@@ -76,13 +76,13 @@ View the Live CreaturePack WebAsseambly demo **[here](https://creature.kestrelmo
 
 Read the writeup on the WebAssembly runtime **[here](<https://medium.com/@kestrelm/creaturepack-high-performance-2d-webgl-character-animation-with-webassembly-72c436bec86c>)**
 
-### Share your animations easily with the CreaturePack WebAssembly Widget
+### Share your animations easily with the CreaturePack WebAssembly Widget:
 
 ![Alt text](./file/readme/img/packPlayer.png)
 
 The **CreaturePack WebAssembly Widget** allows you to easily share your exported Creature animations on your own personal webpage! The rendering core uses the powerful [**BabylonJS 3D WebGL Engine**](https://babylonjs.com/). This allows for beautiful rendering effects, including high quality soft-shadows and real-time 3D lighting. Head over to the **WebAssembly** folder for more info [**here**](https://github.com/kestrelm/Creature_WebGL/tree/master/wasm).
 
-## License
+## License:
 The **Creature Runtimes** operate under 2 License types depending on whether you own a Licensed copy of [Creature](https://creature.kestrelmoon.com) or not.
 - **People who own a licensed copy of Creature:** You use the standard **Creature License** included with the runtime code. **TLDR:** You are free to publish/modify/sell your product with the Creature runtimes without needing to state you are using the runtimes/put the copyright notice in your code/app. If you already have been using the Creature runtimes as a licensed owner of Creature, nothing changes :)
 
@@ -90,8 +90,8 @@ The **Creature Runtimes** operate under 2 License types depending on whether you
 
 ***Both Licenses allow for private use and do not require any disclosure of your source code.***
 
-## FAQ
+## FAQ:
 
-### My character mesh in BabylonJS flickers/disappears
+### My character mesh in BabylonJS flickers/disappears:
 This is a BabylyJS renderer issue and has to do with the bounding box of the character. You can try setting **mesh.alwaysSelectAsActiveMesh = true**. Or refresh the mesh data and bounding box each frame. Please read the thread [here](https://github.com/kestrelm/Creature_WebGL/issues/10)
 
