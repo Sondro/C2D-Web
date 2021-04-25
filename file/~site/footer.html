@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <link rel="stylesheet" href="./css/main.css">
+      <link rel="stylesheet" href="./css/layout.css">
+      <style type="text/css">
+       #R_Div {
+        width:33.3%;
+      }
+    @media screen and (max-width: 950px) {
+        body {
+          font-size: 1rem;
+          position:relative;
+          word-spacing: 1rem;
+          margin-bottom: 1rem;
+          line-height: 1.5rem;
+        }
+          #R_Div {
+          width: 100%;
+          margin-top: -2rem;          
+        }
+          a:hover {
+          letter-spacing: 0;
+          text-align: center;
+      } 
+    }
+    @media screen and (max-width: 475px) {
+      body {
+        position: relative;
+        word-spacing: 0.09rem;
+        line-height: 1.7rem;
+        top: -0.25rem;
+        margin-left: 5%;
+      }
+    }
+  </style>
+</head>
+ <!--
+   background-color:rgba(0,5,20,0.5);
+ -->  
+
+<body style="max-width:1920px; min-width:330px; background-color:transparent; ">
+ 
+<span style="margin-left:2%; top:1rem; position:relative; width:100%;">  
+
+<div id="R_Div" style="float:right;  margin-right:4rem; display:inline-block; text-align:right; display:grid;  grid-template-columns: auto auto auto;
+">
+<div>
+<a href="https://github.com/kestrelm/Creature_UE4" target="_blank">UE4</a> 
+::.
+</div>
+<div>
+<a href="https://github.com/kestrelm/Creature_Unity" target="_blank">Unity</a>
+::.
+</div>
+<div>
+<a href="https://github.com/kestrelm/Creature_Godot" target="_blank">Godot</a>
+::.
+</div>
+<div>
+<a href="https://github.com/kestrelm/Creature_Cocos2DX" target="_blank">Cocos 2D</a>
+::.
+</div>
+<div>
+<a href="https://github.com/kestrelm/Creature_Haxe" target="_blank">Haxe</a>
+::.
+</div>
+<div>
+<a href="https://github.com/kestrelm/Creature_MonoGame" target="_blank">Monogame</a>
+::.
+</div>
+</div>
+</span>
+<br />
+<br />
+<br />
+
+<div style="text-align:center; word-spacing:normal; margin-top:1%; opacity:.75; font-size:1rem;">
+CREATURE 2D © <span id="yearNow"></span> <a href="https://kestrelmoon.com" target="_blank" >Kestrel Moon Studios</a> 
+<p style="margin-top:0.25rem;" />
+Design by <a href="https://github.com/sondro" target="_blank">Sondro</a>
+</div>
+</span>
+
+<div class="clipBottom" style="position:fixed; top:0; width:100%; height:8rem; background-color:rgba(0,5,20,0.5); z-index:-1;"/>
+
+</body>
+</html> 
+
+<script type="text/javascript">
+    document.getElementById("yearNow").innerHTML = `${new Date().getFullYear()}`;
+</script>

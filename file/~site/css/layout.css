@@ -1,0 +1,168 @@
+.navIframe {
+  border:none;
+  position:fixed; 
+  z-index:99; 
+  height:3rem; 
+  margin:0 0 0 -8%; 
+  padding-top:0.5rem; 
+  background-color:hsla(0, 0%, 5%, 0.75);
+  clip-path: polygon(
+    0 0,
+    0 0,
+    90% 0,
+    100% 0%,
+    100% 0%,
+    95% 100%,
+    0% 100%,
+    0% 90%,
+    0% 10%
+  );
+}
+.navDiv {
+  height: 3rem; 
+  background-color: hsla(0, 0%, 5%, 0.75);
+  position: fixed;
+  top: 0;
+  margin: 0 0 0 -8%; 
+
+}
+.footerDiv {
+  border: none;
+  height: 100%;
+  width: 100%; 
+  background-color: hsla(0, 0%, 5%, 0.75);
+}
+.clipBottom {
+  clip-path: polygon(
+   0 0,
+   0 0,
+   100% 0%,
+   100% 0%,
+   100% 100%,
+   75% 50%,
+   0% 100%,
+   8% 90%,
+   0% 10%
+ );
+}
+.techDivWrapFX {
+  position: absolute;
+  top: 3.5rem;
+  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#topTechDivWrapTarget:hover ~ .techDivWrapFX {
+  transition: transform 0.75s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform: translateY(-1.5rem);
+  opacity: 0.5;
+  z-index: -1;
+
+}
+
+.techDivWrap {
+  transition: opacity 0.75s linear, transform 0.75s cubic-bezier(0.175, 0.885, 0.32, 1.275), padding 0.75s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform: scale(0.97);
+  opacity: 0.5;
+  max-width: 90%;
+  clip-path: polygon(
+    0 0,
+    0 0,
+    90% 0,
+    100% 0%,
+    100% 90%,
+    90% 100%,
+    0% 100%,
+    0% 90%,
+    0% 10%
+  );
+}
+.techDivWrapTarget:hover > .techDivWrap {
+  transition: opacity 0.25s linear, transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), padding 0.75s  cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform: scale(1.05) translateY(-3.5rem);
+  opacity: 1;
+  padding-left: 2rem;
+  padding-bottom: 2rem;
+  padding-top: 0.5rem;
+  max-width: 90%;
+  background-color: rgb(0, 0, 20, 0.1); 
+  clip-path: polygon(
+   0 0,
+   0 0,
+   90% 0,
+   100% 0%,
+   100% 90%,
+   90% 100%,
+   0% 100%,
+   0% 90%,
+   0% 10%
+ );
+}
+.techDiv {
+  background-color: rgba(0,0,0,0.25); 
+  width: 90%; 
+  padding: 1rem 0rem 2.25rem 1.5rem; 
+  margin-top: -0.75rem; 
+  clip-path: polygon(
+   0 0,
+   0 0,
+   90% 0,
+   100% 0%,
+   100% 90%,
+   90% 100%,
+   0% 100%,
+   0% 90%,
+   0% 10%
+ );
+}
+@media screen and (max-width: 799px) {
+  body {
+    font-size: 1rem;
+  }
+  h2 {
+    font-size: 1.5rem;
+  }
+  h1 {
+     margin-bottom: 1.75rem;
+  }
+  canvas {
+    margin-top: 1rem;
+    border: 0.25rem dashed lightgray;
+  }
+}
+@media screen and (max-width: 545px) {
+  h2 {
+    font-size: 1.25rem;
+  }
+  h1 {
+    font-size: 1.5rem;
+     margin-bottom: 1.75rem;
+     margin-top: 1.75rem;
+
+  }
+  canvas {
+    margin-top: 0.95rem;
+    border: 0.15rem dashed lightgray;
+  }
+}
+@media screen and (max-width: 412px) {
+  .techDiv {
+    margin-top:-0.5rem; 
+    padding:1rem 0rem 2.25rem 0.3rem; 
+  }
+  body {
+    font-size: 0.75rem;
+  }
+  h2 {
+     font-size: 0.75rem;
+     margin-bottom: -0.55rem;
+  }
+  h1 {
+    font-size: 1rem;
+     margin-bottom: 1.75rem;
+     margin-top: 1.75rem;
+  }
+  canvas {
+    margin-top: 0.7rem;
+    border: 0.12rem dashed lightgray;
+  }
+}
