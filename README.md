@@ -17,13 +17,13 @@ Responsive mini-site with [Live Demos](https://sondro.github.io/C2D-Web/)
 - **PHASER3.JS: Fox-Bat-Horseman Group ::** Fox is untextured (pack issues?).
 - **PHASER3.JS: Composer ::** untextured (pack issues?).
 
-- **PHASER2.JS: Raptor Pack ::**  mesh fails from obsolete texture data (array issues?).
+- **PHASER2.JS: Raptor Pack ::** mesh fails from obsolete texture data (array issues?).
 
 - **All WASM demos ::** requires creature-wasm.wasm in the same folder as the html (change module path?).
 
 
-## ReadMe
-This repository contains the Creature Runtimes for Javascript and WebAssembly based Frameworks.
+## Dev Notes
+Creature Runtimes for Javascript & WebAssembly based Frameworks.
 
 The following frameworks are supported:
 
