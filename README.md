@@ -41,7 +41,7 @@ View the Live demo **[here](http://www.kestrelmoon.com/creature/WebDemo/raptor_m
 
 Unleash the power of high performance **Web Assembly** with the new **CreaturePack WebAssembly** runtimes!
 
-![Alt text](./file/gfx/img/readme/babylonPack.png)
+![Alt text](./file/gfx/readme/img/babylonPack.png)
 The above demo uses advanced **Delta Compression** in CreaturePack to deliver high performance + quality animation with extreme compression ratios! This Raptor animation is **only 230KB in size**!
 
 View the Live CreaturePack BabylonJS WebAssembly demo **[here](https://creature.kestrelmoon.com/WebDemo/wasm/BabylonPack-Demo.html)** 
@@ -55,7 +55,7 @@ Read the writeup on the WebAssembly runtime **[here](<https://medium.com/@kestre
 
 ### Share your animations easily with the CreaturePack WebAssembly Widget
 
-![Alt text](https://github.com/kestrelm/Creature_WebGL/blob/master/packPlayer.png)
+![Alt text](./file/readme/img/packPlayer.png)
 
 The **CreaturePack WebAssembly Widget** allows you to easily share your exported Creature animations on your own personal webpage! The rendering core uses the powerful [**BabylonJS 3D WebGL Engine**](https://www.babylonjs.com/). This allows for beautiful rendering effects, including high quality soft-shadows and real-time 3D lighting. Head over to the **WebAssembly** folder for more info [**here**](https://github.com/kestrelm/Creature_WebGL/tree/master/wasm).
 
