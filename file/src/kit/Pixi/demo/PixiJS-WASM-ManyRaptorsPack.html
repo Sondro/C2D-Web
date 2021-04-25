@@ -25,7 +25,7 @@
             position: absolute;
             left: 50%;
             top: 50%;
-            z-index: 9;
+            z-index: -1;
             margin: -75px 0 0 -75px;
             border: 16px solid #f3f3f3;
             border-radius: 50%;
@@ -52,8 +52,35 @@
 <div class="loader"></div>
 
 <script type="text/javascript">
+var loaded = false;
 
-document.onreadystatechange = function () { if (document.readyState == "complete") { document.getElementsByClassName("loader")[0].style.opacity = 0; } }
+function stopSpinner(){
+    document.getElementsByClassName("loader")[0].style.animation = 'spin 1s linear 1';
+}
+
+window.addEventListener('load', function() {  setTimeout(stopSpinner(), 600000); }, false);
+
+/*
+
+function checkLoaded() {
+    if (document.readyState == "complete" && ) {
+    }
+    if(!loaded) {
+        setTimeout(checkLoaded(), 250);
+    }
+    else {
+        loaded = true;
+        document.getElementsByClassName("loader")[0].style.opacity = 0;
+    }
+}
+
+
+/*
+
+
+//document.onreadystatechange = function () { if (document.readyState == "complete") { document.getElementsByClassName("loader")[0].style.opacity = 0; } 
+
+setTimeout(checkLoaded(), 250);
 
 //window.addEventListener('load', function() { document.getElementsByClassName("loader")[0].style.opacity = 0; }, false);
 
