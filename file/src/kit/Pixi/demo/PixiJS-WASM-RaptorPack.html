@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title>PIXI.JS: WASM Raptor Pack</title>
+        <link rel="stylesheet" href="../../../../_site/css/main.css"> 
+        
+        <script src="../v6.0.2/Pixi.min.js"></script> 
+
+        <script src="../../../C2D/wasm/CreatureWASMUtils.js"></script>        
+                
+        <script src="../wasm/CreaturePixiWASMPackRenderer.js"></script> 
+        <script async type="text/javascript" src="../../../C2D/wasm/creaturepack-wasm.js"></script>
+    </head>
+<body class="bodyDiv">
+<iframe class="navIframe" scrolling="no" src="../../../../_site/nav.html"></iframe>
+<br />
+<br />
+
+<h2 style="margin-top:2rem;">PIXI.JS: WASM Raptor Pack</h2>
+
+<script type="text/javascript">
+
+var loadFile = function (filePath, done) {
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function () { return done(this.response); };
+    xhr.open("GET", filePath, true);
+    xhr.responseType = "arraybuffer";
+    xhr.send();
+};
+
+var Module = {
+    preRun: [],
+    postRun: (function() {
+        var pack_manager = new Module.PackManager();
+        console.log("Loaded WebAssembly.");
+        loadFile("../../../../gfx/char/raptor/raptor.creature_pack", function(response) {
+            var byte_array = new Uint8Array(response);
+            console.log("Loaded CreaturePack Data with size: " + byte_array.byteLength);
+            var load_bytes = CreatureWASMUtils.heapBytes(Module, byte_array);
+            var pack_loader = pack_manager.addPackLoader("Raptor", load_bytes.byteOffset, byte_array.byteLength);
+            var texture = PIXI.Texture.from("../../../../gfx/char/raptor/raptor.png");
+            
+    	// create an new instance of a pixi stage
+		var stage = new PIXI.Container();
+	
+		// create a renderer instance.
+		var w = window.innerWidth * 0.8;
+        var h = window.innerHeight * 0.8;
+		var app = new PIXI.Application({
+			width: w, 
+			height: h, 
+			backgroundColor: 0x363636,
+			antialias: true,
+			transparent: false, 
+			resolution: window.devicePixelRatio || 1
+		});
+
+    		// Add the renderer view element to the DOM
+            document.body.appendChild(app.view);
+            
+            // Add CreaturePack objects
+            var creatureContainer = new PIXI.Container();
+			creatureContainer.position.x = w/4;
+			creatureContainer.position.y = h/4;
+
+			creatureContainer.scale.set(50.0);
+			stage.addChild(creatureContainer);
+			
+            var raptor_renderer = new CreaturePackRenderer(pack_manager ,"Raptor", texture);
+            raptor_renderer.packManager.setPlayerActiveAnimation(raptor_renderer.playerId, "clip1");
+			creatureContainer.addChild(raptor_renderer);
+			creatureContainer.scale.x = creatureContainer.scale.x;
+                
+            function animate() {
+        		requestAnimationFrame( animate );
+                
+                raptor_renderer.packManager.stepPlayer(raptor_renderer.playerId, 1.0);
+                raptor_renderer.refresh();
+        		// render the stage   
+        		app.renderer.render(stage);
+		    }
+		
+		    animate();                
+		});		
+
+    })
+};  
+
+</script>
+
+</body>
+</html>

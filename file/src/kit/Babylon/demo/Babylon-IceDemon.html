@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <title>BABYLON.JS: Ice Demon</title>
+      <link rel="stylesheet" href="../../../../_site/css/main.css">
+      <script src="../babylon.js"></script>
+      <script src="../babylon.gui.min.js"></script>   
+        
+      <script src="../../../C2D/util/gl-matrix.js"></script>   
+      <script src="../../../C2D/util/flatbuffers.js"></script>   
+      <script src="../../../C2D/CreatureFlatData_generated.js"></script>   
+      <script src="../../../C2D/CreatureMeshBone.js"></script>   
+
+      <script src="../CreatureBabylonRenderer.js"></script> 
+  </head>
+  
+<body class="bodyDiv">
+<iframe class="navIframe" scrolling="no" src="../../../../_site/nav.html"></iframe>
+<br />
+<br />
+
+<h2 style="margin-top:2rem;">BABYLON.JS: Ice Demon</h2>
+
+<canvas id="renderCanvas"></canvas>
+
+<script>
+
+    var xobj = new XMLHttpRequest();
+        xobj.overrideMimeType("application/json");
+        
+	// Artwork by: Katarzyna Zalecka [http://kasia88.deviantart.com], Attribution-ShareAlike 3.0 Unported
+	// Download Asset Files here: http://www.kestrelmoon.com/creaturedocs/Animation_Samples_And_Examples/Samples_And_Videos.html
+	xobj.open('GET', '../../../../gfx/char/iceDemon/iceDemon.json', true); // Replace 'my_data' with the path to your file
+	
+	xobj.onreadystatechange = function () {
+          if (xobj.readyState == 4 && xobj.status == "200") {
+            // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+//            callback(xobj.responseText);
+            var response = xobj.responseText;
+              	// Parse JSON string into object
+			var actual_JSON = JSON.parse(response);
+			//document.write("Loaded JSON file: ");
+			
+			var new_creature = new Creature(actual_JSON, false);
+			
+			var new_animation_1 = new CreatureAnimation(actual_JSON, "default", false);
+			
+			var new_manager = new CreatureManager(new_creature);
+			new_manager.AddAnimation(new_animation_1);
+			new_manager.SetActiveAnimationName("default", false);
+			new_manager.SetShouldLoop(true);
+			new_manager.SetIsPlaying(true);
+			new_manager.RunAtTime(0);
+			
+  			// Get the canvas element from our HTML above
+  			var canvas = document.getElementById("renderCanvas");
+
+  			// Load the BABYLON 3D engine
+  			var engine = new BABYLON.Engine(canvas, true);
+  			
+  			
+  			// Now, call the createScene function that you just finished creating
+  			var data = createScene(canvas, engine);
+
+			  // Create creature renderer
+  			var new_creature_renderer = new CreatureBabylonRenderer("CreatureRenderer",
+  															 data.scene, new_manager, 
+  															 data.creature_texture);
+
+			// Register a render loop to repeatedly render the scene
+  			engine.runRenderLoop(function () {
+			    new_manager.Update(0.05);
+				new_creature_renderer.UpdateData();
+
+				//new_creature_renderer.renderMesh.scaling = new BABYLON.Vector3(-1, 1, 1);
+				
+    			data.scene.render();
+  			});
+  			
+  			// Watch for browser/canvas resize events
+  			window.addEventListener("resize", function () {
+    			engine.resize();
+  			});
+          }
+    };
+    xobj.send(null);  
+ 
+ 
+  // This begins the creation of a function that we will 'call' just after it's built
+  var createScene = function (canvas, engine) {
+
+    // Now create a basic Babylon Scene object 
+    var scene = new BABYLON.Scene(engine);
+	scene.clearColor = new BABYLON.Color3(0.26,0.26,0.26);
+	
+    // This creates and positions a free camera
+    var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 0, -25), scene);
+
+    // This targets the camera to scene origin
+    camera.setTarget(new BABYLON.Vector3.Zero());
+
+    // This attaches the camera to the canvas
+    camera.attachControl(canvas, false);
+
+    // This creates a light, aiming 0,1,0 - to the sky.
+    var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
+    
+    // Dim the light a small amount
+    light.intensity = 0;
+
+	// creature
+	var creature_texture = new BABYLON.StandardMaterial("creatureTexture", scene);
+	
+	//creature_texture.emissiveColor = new BABYLON.Color3(1, 1, 1);
+	creature_texture.diffuseTexture = new BABYLON.Texture("../../../../gfx/char/iceDemon/iceDemon.png", scene);
+	creature_texture.diffuseTexture.hasAlpha = true;
+	// Smooth alpha:
+	creature_texture.useAlphaFromDiffuseTexture = true;
+	creature_texture.emissiveTexture = new BABYLON.Texture("../../../../gfx/char/iceDemon/iceDemon.png", scene);
+	creature_texture.emissiveColor = new BABYLON.Color3(1, 1, 1);
+	creature_texture.backFaceCulling = false;
+	
+    // Leave this function
+    return {"scene":scene, "creature_texture":creature_texture};
+
+  };  // End of createScene function
+</script>
+
+</body>
+</html> 

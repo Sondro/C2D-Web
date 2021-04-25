@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <title>PIXI.JS: Fox Ref Pack</title>
+      <link rel="stylesheet" href="../../../../_site/css/main.css"> 
+        
+      <script src="../../../C2D/util/gl-matrix.js"></script>   
+      <script src="../../../C2D/util/msgpack.js"></script>
+
+      <script src="../../../C2D/CreaturePackModule.js"></script> 
+
+      <script src="../v6.0.2/Pixi.min.js"></script> 
+      <script src="../CreaturePixiPackJSRefRenderer.js"></script> 
+  </head>
+  
+<body class="bodyDiv">
+<iframe class="navIframe" scrolling="no" src="../../../../_site/nav.html"></iframe>
+<br />
+<br />
+
+<h2 style="margin-top:2rem;">PIXI.JS: Fox Ref Pack</h2>
+
+<script type="text/javascript">
+
+var loadFile = function (filePath, done) {
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function () { return done(this.response); };
+    xhr.open("GET", filePath, true);
+    xhr.responseType = "arraybuffer";
+    xhr.send();
+};
+
+window.onload = function() {
+    loadFile("../../../../gfx/char/fox/fox2x.creature_pack", function(response) {
+        var byte_array = new Uint8Array(response);
+        console.log("Loaded CreaturePack Data with size: " + byte_array.byteLength);
+        creature_pack = new CreaturePackLoader(byte_array.buffer);
+        var texture = PIXI.Texture.from("../../../../gfx/char/fox/fox.png");
+        
+		// create a renderer instance.
+		var w = window.innerWidth * 0.8;
+        var h = window.innerHeight * 0.8;
+		var app = new PIXI.Application({
+			width: w, 
+			height: h, 
+			backgroundColor: 0x363636,
+			antialias: true,
+			transparent: false, 
+			resolution: window.devicePixelRatio || 1
+		});
+
+		// add the renderer view element to the DOM
+		document.body.appendChild(app.view);
+
+
+		//Create a container object called the `stage`
+        var stage = new PIXI.Container();
+
+        
+        // Add CreaturePack objects
+        var creatureContainer = new PIXI.Container();
+		creatureContainer.position.x = w / 2;
+		creatureContainer.position.y = h / 2;
+
+		creatureContainer.scale.set(25.0);
+		stage.addChild(creatureContainer);
+		
+        var raptor_renderer = new CreaturePackRenderer(creature_pack, texture);
+        raptor_renderer.pack_renderer.setActiveAnimation("run");
+		creatureContainer.addChild(raptor_renderer);
+		creatureContainer.scale.x = creatureContainer.scale.x;
+            
+        function animate() {
+    		requestAnimationFrame( animate );
+            raptor_renderer.pack_renderer.stepTime(1.0);
+            raptor_renderer.refresh();
+    		// render the stage   
+    		app.renderer.render(stage);
+	    }
+	
+	    animate();                
+    });		
+};
+
+
+</script>
+
+</body>
+</html>
