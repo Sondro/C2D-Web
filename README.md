@@ -1,5 +1,26 @@
-# CREATURE 2D - Web
+# []CREATURE 2D - Web(https://sondro.github.io/C2D-Web/)
 
+## Updates
+
+This repo has various updates to later versions & a more organized file structure.
+
+A bonus mini-site with Live []Demos(https://sondro.github.io/C2D-Web/)
+
+### Issues:
+
+- PIXI.JS: Spy Girl Skin Swap :: doesn't swap.
+- PIXI.JS: PIXI.JS: WASM Raptor Pack :: mesh fails to load (array issues). 
+- PIXI.JS: WASM Many Raptors Pack ::  mesh fails to load (array issues).
+
+- PHASER3.JS: Fox :: untextured (pack issues?).
+- PHASER3.JS: Flamingo :: untextured (pack issues?).
+- PHASER3.JS: Fox-Bat-Horseman Group :: Fox is untextured (pack issues?).
+- PHASER3.JS: Composer :: untextured (pack issues?).
+
+- PHASER2.JS: Raptor Pack ::  mesh fails from obsolete texture data (array issues?).
+
+
+## ReadMe
 This repository contains the Creature Runtimes for Javascript and WebAssembly based Frameworks.
 
 The following frameworks are supported:
@@ -14,14 +35,14 @@ The following frameworks are supported:
 
 - **CocosCreator + Wechat Game Engine**
 
-For more information on how to use the runtimes, please head over to this [site](http://www.kestrelmoon.com/creaturedocs/Game_Engine_Runtimes_And_Integration/Runtimes_Introduction.html)
+For more information on how to use the runtimes, please head over to this [site](https://kestrelmoon.com/creaturedocs/Game_Engine_Runtimes_And_Integration/Runtimes_Introduction.html)
 
-The **Ice Demon** character sample Artwork is by: **Katarzyna Zalecka [http://kasia88.deviantart.com], Attribution-ShareAlike 3.0 Unported**
+The **Ice Demon** character sample Artwork is by: **Katarzyna Zalecka [https://kasia88.deviantart.com], Attribution-ShareAlike 3.0 Unported**
 
-Download the samples and more **[here](http://www.kestrelmoon.com/creaturedocs/Animation_Samples_And_Examples/Samples_And_Videos.html)**.
+Download the samples and more **[here](https://kestrelmoon.com/creaturedocs/Animation_Samples_And_Examples/Samples_And_Videos.html)**.
 
 ![Alt text](https://github.com/kestrelm/Creature_WebGL/blob/master/babylonjs.png)
-Live Babylon JS Demo is **[here](http://creature.kestrelmoon.com/WebDemo/Babylon-Demo.html)**.
+Live Babylon JS Demo is **[here](https://creature.kestrelmoon.com/WebDemo/Babylon-Demo.html)**.
 
 ## Live Raptor Mark Demo
 
@@ -33,15 +54,15 @@ Live Babylon JS Demo is **[here](http://creature.kestrelmoon.com/WebDemo/Babylon
 
 This demo shows **30 fully mesh deforming raptor characters** running across the screen. This demo is using the **CreaturePack Web** format to deliver results that have high performance, great quality and yet compact in delivery size.
 
-**UtahRaptor Artwork**: Emily Willoughby (http://emilywilloughby.com) 
+**UtahRaptor Artwork**: Emily Willoughby (https://emilywilloughby.com) 
 
-View the Live demo **[here](http://www.kestrelmoon.com/creature/WebDemo/raptor_mark.html)** .
+View the Live demo **[here](https://kestrelmoon.com/creature/WebDemo/raptor_mark.html)** .
 
 ### WebAssembly Demo
 
 Unleash the power of high performance **Web Assembly** with the new **CreaturePack WebAssembly** runtimes!
 
-![Alt text](./file/gfx/readme/img/babylonPack.png)
+![Alt text](./file/readme/img/babylonPack.png)
 The above demo uses advanced **Delta Compression** in CreaturePack to deliver high performance + quality animation with extreme compression ratios! This Raptor animation is **only 230KB in size**!
 
 View the Live CreaturePack BabylonJS WebAssembly demo **[here](https://creature.kestrelmoon.com/WebDemo/wasm/BabylonPack-Demo.html)** 
@@ -57,7 +78,7 @@ Read the writeup on the WebAssembly runtime **[here](<https://medium.com/@kestre
 
 ![Alt text](./file/readme/img/packPlayer.png)
 
-The **CreaturePack WebAssembly Widget** allows you to easily share your exported Creature animations on your own personal webpage! The rendering core uses the powerful [**BabylonJS 3D WebGL Engine**](https://www.babylonjs.com/). This allows for beautiful rendering effects, including high quality soft-shadows and real-time 3D lighting. Head over to the **WebAssembly** folder for more info [**here**](https://github.com/kestrelm/Creature_WebGL/tree/master/wasm).
+The **CreaturePack WebAssembly Widget** allows you to easily share your exported Creature animations on your own personal webpage! The rendering core uses the powerful [**BabylonJS 3D WebGL Engine**](https://babylonjs.com/). This allows for beautiful rendering effects, including high quality soft-shadows and real-time 3D lighting. Head over to the **WebAssembly** folder for more info [**here**](https://github.com/kestrelm/Creature_WebGL/tree/master/wasm).
 
 ## License
 The **Creature Runtimes** operate under 2 License types depending on whether you own a Licensed copy of [Creature](https://creature.kestrelmoon.com) or not.
