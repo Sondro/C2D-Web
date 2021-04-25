@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html><head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="./css/layout.css">
+  <style type="text/css">
+    #R_Home {
+      display: none;
+      background-color:rgba(100,100,155,0.5);
+      padding: 0rem 0rem 0rem 0rem;
+      clip-path: polygon(
+        0 0,
+        0 0,
+        90% 0,
+        100% 0%,
+        75% 0%,
+        100% 100%,
+        0% 100%,
+        0% 90%,
+        0% 10%
+      );
+  }
+  #L_Home {
+    background-color:rgba(100,100,155,0.5);
+    padding: 0.2rem 2rem 6rem 0.2rem;
+    clip-path: polygon(
+      0 0,
+      0 0,
+      90% 0,
+      100% 0%,
+      75% 0%,
+      100% 100%,
+      0% 100%,
+      0% 90%,
+      0% 10%
+    );
+  }
+  #L_Home:hover {
+    background-color:orange;
+  }
+  
+  #L_Home:hover > #L_Home_a {
+    background-color: rgba(0,0,0,0);
+    color: rgba(0,0,0,0.5);
+    letter-spacing: 0;
+    padding: 0.2rem 2rem 6rem 0.2rem;
+    overflow: hidden;
+  }
+  #R_Div {
+    float: right; 
+    text-align: right;
+    margin-right: 4rem; 
+    display: inline-block;
+  }
+@media screen and (max-width: 861px) {
+    body {
+      font-size: 1rem;
+      position: relative;
+      word-spacing: 0.5rem;
+      margin-bottom: 1rem;
+      line-height: 1.5rem;
+    }
+      #L_Home {
+        display: none;
+    }
+      #R_Home {
+        display: inline-block;
+    }
+      #R_Div {
+      width: 90%;          
+    }
+      a:hover {
+      letter-spacing: 0;
+      text-align:center;
+  } 
+}
+@media screen and (max-width: 475px) {
+  body {
+    position: relative;
+    word-spacing: 0;
+    line-height: 1.7rem;
+    top: -0.25rem;
+  }
+  #R_Div {
+    width: 85%;          
+  }
+}
+</style>
+  <title>Links</title>
+</head>
+
+<body class="bodyDiv" style="background-color:transparent; max-width:1920px; min-width:330px;">
+<span id="L_Home">
+<a id="L_Home_a" href="../../index.html" target="_parent">&nbsp;&nbsp;Home&nbsp;</a>
+::.&nbsp;
+&nbsp;
+</span>
+<div id="R_Div">
+<span id="R_Home">
+<a href="../../index.html" target="_parent">&nbsp;Home&nbsp;</a>
+</span>
+.::
+<a href="https://github.com/kestrelm" target="_blank">GitHub</a>
+.::
+<a href="https://www.kestrelmoon.com/creaturedocs/Game_Engine_Runtimes_And_Integration/Runtimes_Introduction.html" target="_blank">Docs</a>
+.::
+<a href="https://www.kestrelmoon.com/creaturedocs/Animation_Samples_And_Examples/Samples_And_Videos.html" target="_blank">Sample</a>
+.::
+<a href="https://www.youtube.com/c/KestrelMoon" target="_blank">YouTube</a>
+.::
+<a href="https://www.kestrelmoon.com/creatureforum/index.php" target="_blank">Forum</a>
+.::
+<a href="https://www.twitter.com/KestrelmMoon" target="_blank">Twitter</a>
+.::
+<a href="https://www.kestrelmoon.com/creature/creature2D.html" target="_blank">Web</a>
+&nbsp;
+</div>
+
+</body>
+</html> 
