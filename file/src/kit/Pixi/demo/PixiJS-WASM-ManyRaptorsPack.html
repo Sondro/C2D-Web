@@ -53,8 +53,12 @@
 
 <script type="text/javascript">
 
-window.addEventListener('load', function() { document.getElementsByClassName("loader")[0].style.opacity = 0; }, false);
+document.onreadystatechange = function () { if (document.readyState == "complete") { document.getElementsByClassName("loader")[0].style.opacity = 0; } }
+
+//window.addEventListener('load', function() { document.getElementsByClassName("loader")[0].style.opacity = 0; }, false);
+
 /*
+Jquery:
 $(window).load(function() {
     $(".loader").fadeOut("slow");
 })
