@@ -17,7 +17,7 @@ Responsive mini-site with [Live Demos](https://sondro.github.io/C2D-Web/)
 - **PHASER3.JS: Fox-Bat-Horseman Group ::** Fox is untextured (pack issues?).
 - **PHASER3.JS: Composer ::** untextured (pack issues?).
 
-- **PHASER2.JS: Raptor Pack ::** mesh fails - PIXI.Texture.from is obsolete (data issues?).
+- ~~**PHASER2.JS: Raptor Pack ::** mesh fails - PIXI.Texture.from is obsolete (data issues?).~~ **Fix**
 
 - **All WASM demos ::** requires creaturepack-wasm.wasm in the same folder as the html (change module path?).
 
