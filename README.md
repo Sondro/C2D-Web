@@ -43,7 +43,7 @@ The **Ice Demon** character sample Artwork is by: **Katarzyna Zalecka [https://k
 
 Download the samples and more **[here](https://kestrelmoon.com/creaturedocs/Animation_Samples_And_Examples/Samples_And_Videos.html)**.
 
-![Alt text](https://github.com/kestrelm/Creature_WebGL/blob/master/babylonjs.png)
+![Alt text](./file/readme/img/babylonjs.png)
 Live Babylon JS Demo is **[here](https://creature.kestrelmoon.com/WebDemo/Babylon-Demo.html)**.
 
 ### Live Raptor Mark Demo:
