@@ -50,7 +50,7 @@ Live Babylon JS Demo is **[here](https://creature.kestrelmoon.com/WebDemo/Babylo
 
 **Raptor Mark** is a demonstration of what the **Creature WebGL** plugin is capable of. 
 
-![Alt text](https://github.com/kestrelm/Creature_WebGL/blob/master/logo1.png)
+![Alt text](](./file/readme/img/logo1.png)
 
 ### Regular JS Demo:
 
