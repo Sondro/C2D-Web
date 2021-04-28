@@ -45,16 +45,16 @@ function CreaturePackRenderer(pack_data_in, texture_in)
 	this.creatureBoundsMin = new PIXI.Point(0,0);
 	this.creatureBoundsMax = new PIXI.Point(0,0);
 	
-	this.verticies = new PIXI.Float32Array(this.pack_renderer.render_points.length);
-	this.uvs = new PIXI.Float32Array(this.pack_renderer.render_uvs.length);
+	this.verticies = new Float32Array(this.pack_renderer.render_points.length);
+	this.uvs = new Float32Array(this.pack_renderer.render_uvs.length);
 	
-	this.indices = new PIXI.Uint16Array(this.pack_data.indices.length);
+	this.indices = new Uint16Array(this.pack_data.indices.length);
 	for(var i = 0; i < this.indices.length; i++)
 	{
 		this.indices[i] = this.pack_data.indices[i];
 	}
 	
-	this.colors = new PIXI.Float32Array([1,1,1,1]);
+	this.colors = new Float32Array([1,1,1,1]);
 
 	this.UpdateRenderData(this.pack_data.points, this.pack_data.uvs);
 };
