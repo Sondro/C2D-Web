@@ -109,7 +109,7 @@
 
 		creatureContainer.addChild(new_creature_renderer);
 	
-		var swap_cnter = 0;
+		var frames = -1;
 		var swap_type = 0;
 		function animate() {
 			requestAnimationFrame(animate);
@@ -124,8 +124,8 @@
 			// render the stage
 			app.renderer.render(stage);
 			
-			swap_cnter += 1;
-			if(swap_cnter % 100 == 0)
+			++frames;
+			if(frames % 100 == 0)
 			{
 				swap_type += 1;
 				if(swap_type % 3 == 0)
