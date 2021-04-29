@@ -33,42 +33,42 @@
  * RUNTIMES.
  *****************************************************************************/
 
-Phaser.CreaturePackDraw = function (game, x, y, pack_data_in, texture) {
-	x = x || 0;
+Phaser.CreaturePackDraw = function(game, x, y, pack_data_in, texture) {
+    x = x || 0;
     y = y || 0;
-    
+
     /**
     * @property {Phaser.Game} game - A reference to the currently running Game.
     */
     this.game = game;
-    
-    
+
+
     /**
     * @property {number} timeDelta - How quickly the animation time/playback advances
     */
     this.timeDelta = 0.05;
-    
+
     /**
     * @property {string} name - The user defined name given to this Image.
     * @default
     */
     this.name = '';
-    
+
     /**
     * @property {number} type - The const type of this object.
     * @readonly
     */
-    this.type = 314598722; 
-    
+    this.type = 314598722;
+
     /**
     * @property {number} z - The z-depth value of this object within its Group (remember the World is a Group as well). No two objects in a Group can have the same z value.
     */
     this.z = 0;
-    
+
     CreaturePackRenderer.call(this, pack_data_in, texture);
-    
+
     this.position.set(x, y);
-    
+
     /**
     * @property {Phaser.Point} world - The world coordinates of this Image. This differs from the x/y coordinates which are relative to the Images container.
     */
@@ -78,15 +78,11 @@ Phaser.CreaturePackDraw = function (game, x, y, pack_data_in, texture) {
 Phaser.CreaturePackDraw.prototype = Object.create(CreaturePackRenderer.prototype);
 Phaser.CreaturePackDraw.prototype.constructor = Phaser.CreaturePackDraw;
 
-Phaser.CreaturePackDraw.prototype.preUpdate = function() {
-};
+Phaser.CreaturePackDraw.prototype.preUpdate = function() {};
 
 Phaser.CreaturePackDraw.prototype.update = function() {
-	this.pack_renderer.stepTime(this.timeDelta);
-	this.UpdateData();
+    this.pack_renderer.stepTime(this.timeDelta);
+    this.UpdateData();
 };
 
-Phaser.CreaturePackDraw.prototype.postUpdate = function() {
-};
-
-
+Phaser.CreaturePackDraw.prototype.postUpdate = function() {};

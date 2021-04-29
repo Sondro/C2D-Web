@@ -1,56 +1,58 @@
 <!DOCTYPE html>
 <html>
-  <head>
-      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-      <title>BABYLON.JS: WASM Creature Player</title>
-      <link rel="stylesheet" href="../../../../site/css/main.css">
-      <script src="../babylon.js"></script>
-      <script src="../babylon.gui.min.js"></script>   
-        
-      <script src="../../../C2D/wasm/CreatureWASMUtils.js"></script>        
-      <script src="../wasm/CreaturePackBabylonWASMRenderer.js"></script> 
-      <script src="../wasm/CreaturePlayer.js"></script> 
 
-      <script async type="text/javascript" src="../../../C2D/wasm/creaturepack-wasm.js"></script>
-  </head>
-  
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>BABYLON.JS: WASM Creature Player</title>
+	<link rel="stylesheet" href="../../../../site/css/main.css">
+	<script src="../babylon.js"></script>
+	<script src="../babylon.gui.min.js"></script>
+
+	<script src="../../../C2D/wasm/CreatureWASMUtils.js"></script>
+	<script src="../wasm/CreaturePackBabylonWASMRenderer.js"></script>
+	<script src="../wasm/CreaturePlayer.js"></script>
+
+	<script async type="text/javascript" src="../../../C2D/wasm/creaturepack-wasm.js"></script>
+</head>
+
 <body class="bodyDiv">
-<iframe class="navIframe" scrolling="no" src="../../../../site/nav.html"></iframe>
-<br />
-<br />
+	<iframe class="navIframe" scrolling="no" src="../../../../site/nav.html"></iframe>
+	<br />
+	<br />
 
-<h2 style="margin-top:2rem;">BABYLON.JS: WASM Creature Player</h2>
+	<h2 style="margin-top:2rem;">BABYLON.JS: WASM Creature Player</h2>
 
-<canvas id="renderCanvas"></canvas>
+	<canvas id="renderCanvas"></canvas>
 
-<!-- This will load the WebAssembly module and run its main. --> 
-<script type="text/javascript">
+	<!-- This will load the WebAssembly module and run its main. -->
+	<script type="text/javascript">
 
-var Module = {
-    preRun: [],
-    postRun: (function() {
-		console.log("Loaded WebAssembly.");
-		var canvas = document.getElementById("renderCanvas");
-		var player_widget = new CreaturePlayerWidget(
-			window,
-			canvas,
-			"../../../../gfx/char/horseman/horseman.creature_pack",
-			"../../../../gfx/char/horseman/horseman.png",
-			Module,
-			"",
-			true,
-			-25,
-			true,
-			-11,
-			true,
-			new BABYLON.Color3(0.26,0.26,0.26),
-			null,
-			false
-		);
-    })
-};  
+		var Module = {
+			preRun: [],
+			postRun: (function () {
+				console.log("Loaded WebAssembly.");
+				var canvas = document.getElementById("renderCanvas");
+				var player_widget = new CreaturePlayerWidget(
+					window,
+					canvas,
+					"../../../../gfx/char/horseman/horseman.creature_pack",
+					"../../../../gfx/char/horseman/horseman.png",
+					Module,
+					"",
+					true,
+					-25,
+					true,
+					-11,
+					true,
+					new BABYLON.Color3(0.26, 0.26, 0.26),
+					null,
+					false
+				);
+			})
+		};
 
-</script>
+	</script>
 
 </body>
+
 </html>

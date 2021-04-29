@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" href="../../../../../site/css/main.css">
     <title>PHASER3.JS: Flamingo</title>
     <script src="../v3.54.0/phaser.min.js"></script>
@@ -11,62 +12,63 @@
 </head>
 
 <body class="bodyDiv">
-<iframe class="navIframe" scrolling="no" src="../../../../../site/nav.html"></iframe>
-<br />
-<br />
+    <iframe class="navIframe" scrolling="no" src="../../../../../site/nav.html"></iframe>
+    <br />
+    <br />
 
-<h2 style="margin-top:2rem;">PHASER3.JS: Flamingo</h2>
+    <h2 style="margin-top:2rem;">PHASER3.JS: Flamingo</h2>
 
-<script>
-var w = window.innerWidth * 0.8;
-var h = window.innerHeight * 0.8;
+    <script>
+        var w = window.innerWidth * 0.8;
+        var h = window.innerHeight * 0.8;
 
-var config = {
-    type: Phaser.AUTO,
-    width: w,
-    height: h,
-    physics: {
-        default: 'arcade',
-        arcade: {
-            gravity: { y: 0 }
+        var config = {
+            type: Phaser.AUTO,
+            width: w,
+            height: h,
+            physics: {
+                default: 'arcade',
+                arcade: {
+                    gravity: { y: 0 }
+                }
+            },
+            scene: {
+                preload: preload,
+                create: create
+            }
+        };
+
+        var game = new Phaser.Game(config);
+
+        var creature_char = null;
+
+        function preload() {
+            // Load the character Creature Pack binary file
+            this.load.binary('char', '../../../../../gfx/char/flamingo/flamingo.creature_pack');
+            // Load the character Texture Atlas
+            this.load.binary('img', '../../../../../gfx/char/flamingo/flamingo.png');
+
+            // Load a sample Phaser 3 Logo
+            this.load.image('logo', './img/phaser3-logo.png');
+
         }
-    },
-    scene: {
-        preload: preload,
-        create: create
-    }
-};
 
-var game = new Phaser.Game(config);
+        function create() {
+            this.add.image(w / 2, 100, 'logo');
+            this.cameras.main.backgroundColor.setTo(56, 56, 56);
 
-var creature_char = null;
+            // Load our CreaturePack character
+            creature_char = new CreaturePackObj(this, w / 2, h / 2, this.cache.binary.get('char'), 'img');
+            // To access the mesh ( which is a Phaser 3 object, use creature_char.mesh )
+            // Here we setup the character size by tweaking the modelScale on the mesh object
+            creature_char.modelScale.x = 0.12;
+            creature_char.modelScale.y = 0.12;
 
-function preload () {
-    // Load the character Creature Pack binary file
-    this.load.binary('char', '../../../../../gfx/char/flamingo/flamingo.creature_pack');
-    // Load the character Texture Atlas
-    this.load.binary('img', '../../../../../gfx/char/flamingo/flamingo.png');
-
-    // Load a sample Phaser 3 Logo
-    this.load.image('logo', './img/phaser3-logo.png');
-
-}
-
-function create () {
-    this.add.image(w/2, 100, 'logo');
-    this.cameras.main.backgroundColor.setTo(56,56,56);
-
-    // Load our CreaturePack character
-    creature_char = new CreaturePackObj(this, w/2, h/2, this.cache.binary.get('char'), 'img');
-    // To access the mesh ( which is a Phaser 3 object, use creature_char.mesh )
-    // Here we setup the character size by tweaking the modelScale on the mesh object
-    creature_char.modelScale.x = 0.12;
-    creature_char.modelScale.y = 0.12;
-
-    // Set character animation clip
-    creature_char.pack_renderer.setActiveAnimation("walk");
-}
-</script>
+            // Set character animation clip
+            creature_char.pack_renderer.setActiveAnimation("walk");
+        }
+    </script>
 
 </body>
+
 </html>

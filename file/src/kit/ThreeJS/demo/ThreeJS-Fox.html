@@ -1,115 +1,117 @@
 <!DOCTYPE html>
 <html>
-  <head>
-      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <link rel="stylesheet" href="../../../../site/css/main.css">
-        <title>THREE.JS: Fox</title>
-        <script src="../../../C2D/util/gl-matrix.js"></script>
-        <script src="../../../C2D/util/msgpack.js"></script>
-        <script src="../../../C2D/util/flatbuffers.js"></script>
-        <script src="../../../C2D/util/msgpack.js"></script>
 
-        <script src="../../../C2D/CreatureFlatData_generated.js"></script>
-        <script src="../../../C2D/CreatureMeshBone.js"></script>
-        
-		<script src="../CreatureThreeJSRenderer.js"></script>
-		<!--https://raw.githubusercontent.com/mrdoob/three.js/dev/build/three.min.js-->
-        <script src="../three.min.js"></script>
-    </head>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="../../../../site/css/main.css">
+	<title>THREE.JS: Fox</title>
+	<script src="../../../C2D/util/gl-matrix.js"></script>
+	<script src="../../../C2D/util/msgpack.js"></script>
+	<script src="../../../C2D/util/flatbuffers.js"></script>
+	<script src="../../../C2D/util/msgpack.js"></script>
 
-    <body class="bodyDiv">
-    <iframe class="navIframe" scrolling="no" src="../../../../site/nav.html"></iframe>
-    <br />
-    <br />
+	<script src="../../../C2D/CreatureFlatData_generated.js"></script>
+	<script src="../../../C2D/CreatureMeshBone.js"></script>
 
-    <h2 style="margin-top:2rem;">THREE.JS: Fox</h2>
+	<script src="../CreatureThreeJSRenderer.js"></script>
+	<!--https://raw.githubusercontent.com/mrdoob/three.js/dev/build/three.min.js-->
+	<script src="../three.min.js"></script>
+</head>
 
-<script>
-var xobj = new XMLHttpRequest();
-xobj.overrideMimeType("application/json");
-xobj.open('GET', '../../../../gfx/char/fox/fox0x.json', true); // Replace 'my_data' with the path to your file
-xobj.onreadystatechange = function () {
-		if (xobj.readyState == 4 && xobj.status == "200") {
-		// Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
-//            callback(xobj.responseText);
-		var response = xobj.responseText;
-			// Parse JSON string into object
-		var actual_JSON = JSON.parse(response);
-		
-		var scene;
-		var camera;
-		var renderer;
-		var new_creature;
-		var new_manager;
-		var new_creature_renderer;
-		
-		
-		function initScene() {
-			// Create scene
-			scene = new THREE.Scene();
+<body class="bodyDiv">
+	<iframe class="navIframe" scrolling="no" src="../../../../site/nav.html"></iframe>
+	<br />
+	<br />
 
-			// This creates and positions a free camera
-			var w = window.innerWidth * 0.8;
-			var h = window.innerHeight * 0.8;
-			camera = new THREE.PerspectiveCamera( 75, w / h, 0.1, 1000 );
-			camera.position.z = -20;
-			camera.lookAt(scene.position);
-			scene.add(camera);
+	<h2 style="margin-top:2rem;">THREE.JS: Fox</h2>
 
-			// create renderer
-			renderer = new THREE.WebGLRenderer();
-			renderer.setSize(w, h);
-			renderer.setClearColor(0x363636, 1);
-			document.body.appendChild( renderer.domElement );
-			
-			new_creature = new Creature(actual_JSON, false);
-		
-			var new_animation_1 = new CreatureAnimation(actual_JSON, "default", false);
-			var new_animation_2 = new CreatureAnimation(actual_JSON, "run", false);
-		
-			new_manager = new CreatureManager(new_creature);
-			new_manager.AddAnimation(new_animation_1);
-			new_manager.AddAnimation(new_animation_2);
-			new_manager.SetActiveAnimationName("default", false);
-			new_manager.SetShouldLoop(true);
-			new_manager.SetIsPlaying(true);
-			new_manager.RunAtTime(0);
+	<script>
+		var xobj = new XMLHttpRequest();
+		xobj.overrideMimeType("application/json");
+		xobj.open('GET', '../../../../gfx/char/fox/fox0x.json', true); // Replace 'my_data' with the path to your file
+		xobj.onreadystatechange = function () {
+			if (xobj.readyState == 4 && xobj.status == "200") {
+				// Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+				//            callback(xobj.responseText);
+				var response = xobj.responseText;
+				// Parse JSON string into object
+				var actual_JSON = JSON.parse(response);
 
-			//var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-			var texture = new THREE.TextureLoader().load("../../../../gfx/char/fox/fox.png");
-			var material = new THREE.MeshBasicMaterial({
-				map: texture,
-				transparent: true,
-				side:THREE.DoubleSide
-			});
-						
-					
-			// Create creature renderer
-			new_creature_renderer = new CreatureRenderer("CreatureRenderer",
-															scene, new_manager, 
-															material);
-			
-			// Flip creature to the right
-			new_creature_renderer.renderMesh.scale.x = -1;
-		}
+				var scene;
+				var camera;
+				var renderer;
+				var new_creature;
+				var new_manager;
+				var new_creature_renderer;
 
-		var animateScene = function () {
-			new_manager.Update(0.05);
-			new_creature_renderer.UpdateData();
 
-			requestAnimationFrame(animateScene);
-			renderer.render(scene, camera);
+				function initScene() {
+					// Create scene
+					scene = new THREE.Scene();
+
+					// This creates and positions a free camera
+					var w = window.innerWidth * 0.8;
+					var h = window.innerHeight * 0.8;
+					camera = new THREE.PerspectiveCamera(75, w / h, 0.1, 1000);
+					camera.position.z = -20;
+					camera.lookAt(scene.position);
+					scene.add(camera);
+
+					// create renderer
+					renderer = new THREE.WebGLRenderer();
+					renderer.setSize(w, h);
+					renderer.setClearColor(0x363636, 1);
+					document.body.appendChild(renderer.domElement);
+
+					new_creature = new Creature(actual_JSON, false);
+
+					var new_animation_1 = new CreatureAnimation(actual_JSON, "default", false);
+					var new_animation_2 = new CreatureAnimation(actual_JSON, "run", false);
+
+					new_manager = new CreatureManager(new_creature);
+					new_manager.AddAnimation(new_animation_1);
+					new_manager.AddAnimation(new_animation_2);
+					new_manager.SetActiveAnimationName("default", false);
+					new_manager.SetShouldLoop(true);
+					new_manager.SetIsPlaying(true);
+					new_manager.RunAtTime(0);
+
+					//var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+					var texture = new THREE.TextureLoader().load("../../../../gfx/char/fox/fox.png");
+					var material = new THREE.MeshBasicMaterial({
+						map: texture,
+						transparent: true,
+						side: THREE.DoubleSide
+					});
+
+
+					// Create creature renderer
+					new_creature_renderer = new CreatureRenderer("CreatureRenderer",
+						scene, new_manager,
+						material);
+
+					// Flip creature to the right
+					new_creature_renderer.renderMesh.scale.x = -1;
+				}
+
+				var animateScene = function () {
+					new_manager.Update(0.05);
+					new_creature_renderer.UpdateData();
+
+					requestAnimationFrame(animateScene);
+					renderer.render(scene, camera);
+				};
+
+				initScene();
+				animateScene();
+
+			}
 		};
-
-		initScene();
-		animateScene();
-											
-	}
-};
-xobj.send(null);  
+		xobj.send(null);
 
 
-</script>
+	</script>
 
 </body>
-</html> 
+
+</html>

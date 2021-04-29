@@ -33,54 +33,48 @@
  * RUNTIMES.
  *****************************************************************************/
 
-function CreatureRenderer(name, scene, manager_in, texture_in)
-{
-	this.creature_manager = manager_in;
-	this.texture = texture_in;
-	this.scene = scene;
-	this.name = name;
-	this.normals = [];
-	
-	this.renderMesh = null; 	
+function CreatureRenderer(name, scene, manager_in, texture_in) {
+    this.creature_manager = manager_in;
+    this.texture = texture_in;
+    this.scene = scene;
+    this.name = name;
+    this.normals = [];
 
-	if(this.renderMesh == null)
-	{
-		var target_creature = this.creature_manager.target_creature;
-		var geometry = new THREE.BufferGeometry();
-		var material = this.texture;	
-		
-		var vertices = new Float32Array(target_creature.total_num_pts * 3 );
-		var normals = new Float32Array(target_creature.total_num_pts * 3 );
-		var uvs = new Float32Array(target_creature.total_num_pts * 2 );
-		var indices = new Uint32Array(target_creature.global_indices.length);
-		
-		// topology
-		for(var i = 0; i < target_creature.global_indices.length; i++)
-		{
-			indices[i] = target_creature.global_indices[i];
-		}
-		
-		// points
-		for(var i = 0; i < target_creature.total_num_pts * 3; i++)
-		{
-			vertices[i] = target_creature.global_pts[i];
-		}
-		
-		// uvs
-		for(var i = 0; i < target_creature.total_num_pts * 2; i++)
-		{
-			uvs[i] = target_creature.global_uvs[i];
-		}
-		
-		// normals
-		for(var i = 0; i < target_creature.total_num_pts * 3; i+=3)
-		{
-			normals[i] = 0.0;
-			normals[i + 1] = 0.0;
-			normals[i + 2] = 0.0;
-		}
-				
-		/*
+    this.renderMesh = null;
+
+    if(this.renderMesh == null) {
+        var target_creature = this.creature_manager.target_creature;
+        var geometry = new THREE.BufferGeometry();
+        var material = this.texture;
+
+        var vertices = new Float32Array(target_creature.total_num_pts * 3);
+        var normals = new Float32Array(target_creature.total_num_pts * 3);
+        var uvs = new Float32Array(target_creature.total_num_pts * 2);
+        var indices = new Uint32Array(target_creature.global_indices.length);
+
+        // topology
+        for(var i = 0; i < target_creature.global_indices.length; i++) {
+            indices[i] = target_creature.global_indices[i];
+        }
+
+        // points
+        for(var i = 0; i < target_creature.total_num_pts * 3; i++) {
+            vertices[i] = target_creature.global_pts[i];
+        }
+
+        // uvs
+        for(var i = 0; i < target_creature.total_num_pts * 2; i++) {
+            uvs[i] = target_creature.global_uvs[i];
+        }
+
+        // normals
+        for(var i = 0; i < target_creature.total_num_pts * 3; i+=3) {
+            normals[i] = 0.0;
+            normals[i + 1] = 0.0;
+            normals[i + 2] = 0.0;
+        }
+
+        /*
 		// colors
 		for(var i = 0; i < target_creature.total_num_pts * 4; i+=4)
 		{
@@ -89,57 +83,54 @@ function CreatureRenderer(name, scene, manager_in, texture_in)
 			geometry.colors.push(cur_color);
 		}
 		*/
-		
-		geometry.setIndex( new THREE.BufferAttribute( indices, 1 ) );
-		geometry.setAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) );
-		geometry.setAttribute( 'normal', new THREE.BufferAttribute( normals, 3 ) );
-		geometry.setAttribute( 'uv', new THREE.BufferAttribute( uvs, 2 ) );
-		
-		this.renderMesh = new THREE.Mesh(geometry, material);
-		scene.add(this.renderMesh);
 
-		this.renderMesh.geometry.computeFaceNormals();		
-		this.renderMesh.geometry.computeVertexNormals();	
-		
-		this.renderMesh.geometry.elementsNeedUpdate = true;	
-		this.renderMesh.geometry.normalsNeedUpdate = true;	
-		//this.renderMesh.geometry.colorsNeedUpdate = true;
-		material.needsUpdate = true;
-		this.renderMesh.geometry.verticesNeedUpdate = true;
-		this.renderMesh.geometry.uvsNeedUpdate = true;
-		this.renderMesh.geometry.buffersNeedUpdate = true;
-	}
+        geometry.setIndex(new THREE.BufferAttribute(indices, 1));
+        geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+        geometry.setAttribute('normal', new THREE.BufferAttribute(normals, 3));
+        geometry.setAttribute('uv', new THREE.BufferAttribute(uvs, 2));
+
+        this.renderMesh = new THREE.Mesh(geometry, material);
+        scene.add(this.renderMesh);
+
+        this.renderMesh.geometry.computeFaceNormals();
+        this.renderMesh.geometry.computeVertexNormals();
+
+        this.renderMesh.geometry.elementsNeedUpdate = true;
+        this.renderMesh.geometry.normalsNeedUpdate = true;
+        // this.renderMesh.geometry.colorsNeedUpdate = true;
+        material.needsUpdate = true;
+        this.renderMesh.geometry.verticesNeedUpdate = true;
+        this.renderMesh.geometry.uvsNeedUpdate = true;
+        this.renderMesh.geometry.buffersNeedUpdate = true;
+    }
 
 };
 
 
-CreatureRenderer.prototype.UpdateData = function()
-{	
-	var target_creature = this.creature_manager.target_creature;
-	
-	var read_pts = target_creature.render_pts;
-	//var read_pts = target_creature.global_pts;
-	var read_uvs = target_creature.global_uvs;
-	var read_colours = target_creature.render_colours;
-	
-	// points
-	var index = 0;
-	set_vertices = this.renderMesh.geometry.getAttribute("position");
-	set_vertices.needsUpdate = true;
-	for(var i = 0; i < target_creature.total_num_pts * 3; i++)
-	{
-		set_vertices.array[i] = target_creature.render_pts[i];
-	}
-	
-	// uvs
-	set_uvs = this.renderMesh.geometry.getAttribute("uv");
-	set_uvs.needsUpdate = true;
-	for(var i = 0; i < target_creature.total_num_pts * 2; i+=2)
-	{
-		set_uvs.array[i] = target_creature.global_uvs[i];
-		set_uvs.array[i + 1] = 1.0 - target_creature.global_uvs[i + 1];
-	}
-	
-	this.renderMesh.geometry.verticesNeedUpdate = true;
-	this.renderMesh.geometry.uvsNeedUpdate = true;
+CreatureRenderer.prototype.UpdateData = function() {
+    var target_creature = this.creature_manager.target_creature;
+
+    var read_pts = target_creature.render_pts;
+    // var read_pts = target_creature.global_pts;
+    var read_uvs = target_creature.global_uvs;
+    var read_colours = target_creature.render_colours;
+
+    // points
+    var index = 0;
+    set_vertices = this.renderMesh.geometry.getAttribute("position");
+    set_vertices.needsUpdate = true;
+    for(var i = 0; i < target_creature.total_num_pts * 3; i++) {
+        set_vertices.array[i] = target_creature.render_pts[i];
+    }
+
+    // uvs
+    set_uvs = this.renderMesh.geometry.getAttribute("uv");
+    set_uvs.needsUpdate = true;
+    for(var i = 0; i < target_creature.total_num_pts * 2; i+=2) {
+        set_uvs.array[i] = target_creature.global_uvs[i];
+        set_uvs.array[i + 1] = 1.0 - target_creature.global_uvs[i + 1];
+    }
+
+    this.renderMesh.geometry.verticesNeedUpdate = true;
+    this.renderMesh.geometry.uvsNeedUpdate = true;
 };

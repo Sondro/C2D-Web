@@ -1,92 +1,94 @@
 <!DOCTYPE html>
 <html>
-  <head>
-      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <link rel="stylesheet" href="../../../../site/css/main.css">
-        <title>THREE.JS: Fox Pack</title>        
-        <script src="../../../C2D/util/gl-matrix.js"></script>
-        <script src="../../../C2D/util/msgpack.js"></script>
 
-        <script src="../../../C2D/CreaturePackModule.js"></script>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="../../../../site/css/main.css">
+	<title>THREE.JS: Fox Pack</title>
+	<script src="../../../C2D/util/gl-matrix.js"></script>
+	<script src="../../../C2D/util/msgpack.js"></script>
 
-		<script src="../CreatureThreeJSPackRenderer.js"></script>
-		<!--https://raw.githubusercontent.com/mrdoob/three.js/dev/build/three.min.js-->
-        <script src="../three.min.js"></script>
-   </head>
+	<script src="../../../C2D/CreaturePackModule.js"></script>
 
-    <body class="bodyDiv">
-    <iframe class="navIframe" scrolling="no" src="../../../../site/nav.html"></iframe>
-    <br />
-    <br />
+	<script src="../CreatureThreeJSPackRenderer.js"></script>
+	<!--https://raw.githubusercontent.com/mrdoob/three.js/dev/build/three.min.js-->
+	<script src="../three.min.js"></script>
+</head>
 
-    <h2 style="margin-top:2rem;">THREE.JS: Fox Pack</h2>
+<body class="bodyDiv">
+	<iframe class="navIframe" scrolling="no" src="../../../../site/nav.html"></iframe>
+	<br />
+	<br />
 
-<script type="text/javascript">
+	<h2 style="margin-top:2rem;">THREE.JS: Fox Pack</h2>
 
-var xobj = new XMLHttpRequest();
-xobj.responseType = "arraybuffer";
-xobj.open('GET', '../../../../gfx/char/fox/fox2x.creature_pack', true); // Replace 'my_data' with the path to your file
-xobj.onreadystatechange = function () {
-		if (xobj.readyState == 4 && xobj.status == "200") {
-		var byte_array = new Uint8Array(xobj.response);
-		console.log("Loaded CreaturePack Data with size: " + byte_array.byteLength);
-		var creature_pack = new CreaturePackLoader(byte_array.buffer);			
-		var scene;
-		var camera;
-		var renderer;
-		var new_creature_renderer;
-		
-		
-		function initScene() {
-			// Create scene
-			scene = new THREE.Scene();
+	<script type="text/javascript">
 
-			// This creates and positions a free camera
-			var w = window.innerWidth * 0.8;
-			var h = window.innerHeight * 0.8;
-			camera = new THREE.PerspectiveCamera( 75, w / h, 0.1, 1000 );			camera.position.z = -20;
-			camera.lookAt(scene.position);
-			scene.add(camera);
+		var xobj = new XMLHttpRequest();
+		xobj.responseType = "arraybuffer";
+		xobj.open('GET', '../../../../gfx/char/fox/fox2x.creature_pack', true); // Replace 'my_data' with the path to your file
+		xobj.onreadystatechange = function () {
+			if (xobj.readyState == 4 && xobj.status == "200") {
+				var byte_array = new Uint8Array(xobj.response);
+				console.log("Loaded CreaturePack Data with size: " + byte_array.byteLength);
+				var creature_pack = new CreaturePackLoader(byte_array.buffer);
+				var scene;
+				var camera;
+				var renderer;
+				var new_creature_renderer;
 
-			// create renderer
-			renderer = new THREE.WebGLRenderer();
-			renderer.setSize(w, h);
-			renderer.setClearColor(0x363636, 1);
-			document.body.appendChild( renderer.domElement );				
-		
-			var texture = new THREE.TextureLoader().load("../../../../gfx/char/fox/fox.png");
-			//var material = new THREE.MeshBasicMaterial( { color: 0x00ff00, side:THREE.DoubleSide } );
 
-			
-			var material = new THREE.MeshBasicMaterial({
-				map: texture,
-				transparent: true,
-				side:THREE.DoubleSide
-				});
-												
-			// Create creature renderer
-			new_creature_renderer = new CreaturePackRenderer("CreatureRenderer", scene, creature_pack, material);
-			new_creature_renderer.pack_renderer.setActiveAnimation("run");
+				function initScene() {
+					// Create scene
+					scene = new THREE.Scene();
 
-			// Flip creature to the right
-			new_creature_renderer.renderMesh.scale.x = -1;
-		}
+					// This creates and positions a free camera
+					var w = window.innerWidth * 0.8;
+					var h = window.innerHeight * 0.8;
+					camera = new THREE.PerspectiveCamera(75, w / h, 0.1, 1000); camera.position.z = -20;
+					camera.lookAt(scene.position);
+					scene.add(camera);
 
-		var animateScene = function () {                
-			new_creature_renderer.pack_renderer.stepTime(0.8);
-			new_creature_renderer.UpdateData();
+					// create renderer
+					renderer = new THREE.WebGLRenderer();
+					renderer.setSize(w, h);
+					renderer.setClearColor(0x363636, 1);
+					document.body.appendChild(renderer.domElement);
 
-			requestAnimationFrame(animateScene);
-			renderer.render(scene, camera);
+					var texture = new THREE.TextureLoader().load("../../../../gfx/char/fox/fox.png");
+					//var material = new THREE.MeshBasicMaterial( { color: 0x00ff00, side:THREE.DoubleSide } );
+
+
+					var material = new THREE.MeshBasicMaterial({
+						map: texture,
+						transparent: true,
+						side: THREE.DoubleSide
+					});
+
+					// Create creature renderer
+					new_creature_renderer = new CreaturePackRenderer("CreatureRenderer", scene, creature_pack, material);
+					new_creature_renderer.pack_renderer.setActiveAnimation("run");
+
+					// Flip creature to the right
+					new_creature_renderer.renderMesh.scale.x = -1;
+				}
+
+				var animateScene = function () {
+					new_creature_renderer.pack_renderer.stepTime(0.8);
+					new_creature_renderer.UpdateData();
+
+					requestAnimationFrame(animateScene);
+					renderer.render(scene, camera);
+				};
+
+				initScene();
+				animateScene();
+
+			}
 		};
-
-		initScene();
-		animateScene();
-											
-	}
-};
-xobj.send(null);  
-</script>
+		xobj.send(null);
+	</script>
 
 </body>
-</html> 
+
+</html>

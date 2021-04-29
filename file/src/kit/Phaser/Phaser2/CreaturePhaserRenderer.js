@@ -33,47 +33,47 @@
  * RUNTIMES.
  *****************************************************************************/
 
-Phaser.CreatureDraw = function (game, x, y, manager, texture) {
-	x = x || 0;
+Phaser.CreatureDraw = function(game, x, y, manager, texture) {
+    x = x || 0;
     y = y || 0;
-    
+
     /**
     * @property {Phaser.Game} game - A reference to the currently running Game.
     */
     this.game = game;
-    
-    
+
+
     /**
     * @property {number} timeDelta - How quickly the animation time/playback advances
     */
     this.timeDelta = 0.05;
-    
+
     /**
     * @property {string} name - The user defined name given to this Image.
     * @default
     */
     this.name = '';
-    
+
     /**
     * @property {number} type - The const type of this object.
     * @readonly
     */
-    this.type = 314598723; //Phaser.CREATUREDRAW;
-    
+    this.type = 314598723; // Phaser.CREATUREDRAW;
+
     /**
     * @property {number} z - The z-depth value of this object within its Group (remember the World is a Group as well). No two objects in a Group can have the same z value.
     */
     this.z = 0;
-    
+
     CreatureRenderer.call(this, manager, texture);
-    
+
     this.position.set(x, y);
-    
+
     /**
     * @property {Phaser.Point} world - The world coordinates of this Image. This differs from the x/y coordinates which are relative to the Images container.
     */
     this.world = new Phaser.Point(x, y);
-    
+
     // Creature manager, internal value
     this._manager = manager;
 };
@@ -81,15 +81,11 @@ Phaser.CreatureDraw = function (game, x, y, manager, texture) {
 Phaser.CreatureDraw.prototype = Object.create(CreatureRenderer.prototype);
 Phaser.CreatureDraw.prototype.constructor = Phaser.CreatureDraw;
 
-Phaser.CreatureDraw.prototype.preUpdate = function() {
-};
+Phaser.CreatureDraw.prototype.preUpdate = function() {};
 
 Phaser.CreatureDraw.prototype.update = function() {
-	this._manager.Update(this.timeDelta);
-	this.UpdateData();
+    this._manager.Update(this.timeDelta);
+    this.UpdateData();
 };
 
-Phaser.CreatureDraw.prototype.postUpdate = function() {
-};
-
-
+Phaser.CreatureDraw.prototype.postUpdate = function() {};

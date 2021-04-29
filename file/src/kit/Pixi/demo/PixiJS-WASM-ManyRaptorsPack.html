@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html>
-  <head>
-      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-      <title>PIXI.JS: WASM Many Raptors Pack</title>
 
-        <link rel="stylesheet" href="../../../../site/css/main.css"> 
-        
-        <script src="../../../C2D/wasm/CreatureWASMUtils.js"></script>        
-        
-        <script src="../v6.0.2/pixi.min.js"></script> 
-        <script src="../wasm/CreaturePixiWASMPackRenderer.js"></script>        
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>PIXI.JS: WASM Many Raptors Pack</title>
 
-        <script async type="text/javascript" src="../../../C2D/wasm/creaturepack-wasm.js"></script>
-        <script src="../../../C2D/util/stats.min.js"></script>
-        
-<!--
+    <link rel="stylesheet" href="../../../../site/css/main.css">
+
+    <script src="../../../C2D/wasm/CreatureWASMUtils.js"></script>
+
+    <script src="../v6.0.2/pixi.min.js"></script>
+    <script src="../wasm/CreaturePixiWASMPackRenderer.js"></script>
+
+    <script async type="text/javascript" src="../../../C2D/wasm/creaturepack-wasm.js"></script>
+    <script src="../../../C2D/util/stats.min.js"></script>
+
+    <!--
         <script src="//rawgit.com/mrdoob/stats.js/master/build/stats.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
 -->
-        <style>
+    <style>
         .loader {
             transition: opacity 0.75s linear;
             position: absolute;
@@ -33,189 +34,193 @@
             width: 120px;
             height: 120px;
             animation: spin 2s linear infinite;
-          }
+        }
 
-          @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-          }        
-        </style>
-   </head>
-   
-<body class="bodyDiv">
-<iframe class="navIframe" scrolling="no" src="../../../../site/nav.html"></iframe>
-<br />
-<br />
-
-<h2 style="margin-top:2rem;">PIXI.JS: WASM Many Raptors Pack</h2>
-
-<div class="loader"></div>
-
-<script type="text/javascript">
-var loaded = false;
-
-function stopSpinner(){
-    document.getElementsByClassName("loader")[0].style.animation = 'spin 2s ease-out 1';
-}
-
-document.onreadystatechange = function () { if (document.readyState == "complete") { () => setTimeout(stopSpinner(), 600000); } }
-
-/*
-
-function checkLoaded() {
-    if (document.readyState == "complete" && ) {
-    }
-    if(!loaded) {
-        setTimeout(checkLoaded(), 250);
-    }
-    else {
-        loaded = true;
-        document.getElementsByClassName("loader")[0].style.opacity = 0;
-    }
-}
-
-
-/*
-
-
-//document.onreadystatechange = function () { if (document.readyState == "complete") { document.getElementsByClassName("loader")[0].style.opacity = 0; } 
-
-setTimeout(checkLoaded(), 250);
-
-//window.addEventListener('load', function() { document.getElementsByClassName("loader")[0].style.opacity = 0; }, false);
-
-/*
-Jquery:
-$(window).load(function() {
-    $(".loader").fadeOut("slow");
-})
-*/
-</script>
-
-
-<script type="text/javascript">    
-
-var loadFile = function (filePath, done) {
-    var xhr = new XMLHttpRequest();
-    xhr.onload = function () { return done(this.response); };
-    xhr.open("GET", filePath, true);
-    xhr.responseType = "arraybuffer";
-    xhr.send();
-};
-
-var Module = {
-    preRun: [],
-    postRun: (function() {
-
-        var pack_manager = new Module.PackManager();
-        console.log("Loaded WebAssembly.");
-        loadFile("../../../../gfx/char/raptor/raptor.creature_pack", function(response) {
-            var byte_array = new Uint8Array(response);
-            console.log("Loaded CreaturePack Data with size: " + byte_array.byteLength);
-            var load_bytes = CreatureWASMUtils.heapBytes(Module, byte_array);
-            var pack_loader = pack_manager.addPackLoader("Raptor", load_bytes.byteOffset, byte_array.byteLength);
-            var texture = PIXI.Texture.from("../../../../gfx/char/raptor/raptor.png");
-
-            // Stats
-            var stats = new Stats();
-            stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
-            document.body.appendChild( stats.dom );
-            
-            var w = window.innerWidth * 0.8;
-            var h = window.innerWidth * 0.8;
-            // Start PixiJS     
-    		// create a renderer instance.			
-    		var app = new PIXI.Application({
-                width: w, 
-                height: h, 
-                backgroundColor: 0x363636, 
-                antialias: true,
-                transparent: false, 
-                resolution: window.devicePixelRatio || 1
-            });
-    		//Create a container object called the `stage`
-            var stage = new PIXI.Container();
-
-    		// Add the renderer view element to the DOM
-            document.body.appendChild(app.renderer.view);
-            
-            // Add CreaturePack objects
-            var allContainers = []
-            var numObjs = 200;
-
-            function randomIntFromInterval(min,max)
-            {           
-                return Math.floor(Math.random()*(max-min+1)+min);
-            }                
-            
-            for(var i = 0; i < numObjs; i++) {
-           		var creatureContainer = new PIXI.Container();
-                var setScale = randomIntFromInterval(10, 20);
-    			creatureContainer.scale.set(setScale);
-    			creatureContainer.position.x = randomIntFromInterval(0, w);
-                creatureContainer.position.y = h * 0.5 + (20 - setScale) * 10;
-    			stage.addChild(creatureContainer);
-    			
-                var raptor_renderer = new CreaturePackRenderer(pack_manager ,"Raptor", texture);
-                raptor_renderer.packManager.setPlayerActiveAnimation(raptor_renderer.playerId, "clip1");
-                raptor_renderer.packManager.stepPlayer(raptor_renderer.playerId, randomIntFromInterval(0, 200));
-    			creatureContainer.addChild(raptor_renderer);
-                creatureContainer.scale.x = creatureContainer.scale.x;
-
-                var charData = {}
-                charData["container"] = creatureContainer;
-                charData["render"] = raptor_renderer;
-                charData["speed"] = randomIntFromInterval(5, 10);
-                allContainers.push(charData);
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
             }
-            
-            var text = new PIXI.Text(
-                "CreaturePack WebAssembly Demo with " + numObjs + " Real-time Mesh Deforming Dinosaurs!", 
-                {font:"30px Arial", fill:"yellow"});
-            text.position.x = 10;                    
-            text.position.y = 42;
-            stage.addChild(text);           
 
-            var text2 = new PIXI.Text(
-                "UtahRaptor Artwork: Emily Willoughby (http://emilywilloughby.com)", 
-                {font:"15px Arial", fill:"white"});          
-            text2.position.x = 12;                    
-            text2.position.y =  text.position.y + 30;          
-            stage.addChild(text2);           
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
 
-            
-            function animate() {
-        		requestAnimationFrame( animate );
-                
-                stats.begin();
+<body class="bodyDiv">
+    <iframe class="navIframe" scrolling="no" src="../../../../site/nav.html"></iframe>
+    <br />
+    <br />
 
-                for(var i = 0; i < numObjs; i++) {
-                    var curObj = allContainers[i];
-                    var curRender = curObj["render"];
-                    var curContainer = curObj["container"];
-                    var curX = curContainer.position.x;
-                    curX -= curObj["speed"];
-                    if(curX < -800)
-                    {
-                        curX = w + 300;
+    <h2 style="margin-top:2rem;">PIXI.JS: WASM Many Raptors Pack</h2>
+
+    <div class="loader"></div>
+
+    <script type="text/javascript">
+        var loaded = false;
+
+        function stopSpinner() {
+            document.getElementsByClassName("loader")[0].style.animation = 'spin 2s ease-out 1';
+        }
+
+        document.onreadystatechange = function () { if (document.readyState == "complete") { () => setTimeout(stopSpinner(), 600000); } }
+
+        /*
+        
+        function checkLoaded() {
+            if (document.readyState == "complete" && ) {
+            }
+            if(!loaded) {
+                setTimeout(checkLoaded(), 250);
+            }
+            else {
+                loaded = true;
+                document.getElementsByClassName("loader")[0].style.opacity = 0;
+            }
+        }
+        
+        
+        /*
+        
+        
+        //document.onreadystatechange = function () { if (document.readyState == "complete") { document.getElementsByClassName("loader")[0].style.opacity = 0; }
+        
+        setTimeout(checkLoaded(), 250);
+        
+        //window.addEventListener('load', function() { document.getElementsByClassName("loader")[0].style.opacity = 0; }, false);
+        
+        /*
+        Jquery:
+        $(window).load(function() {
+            $(".loader").fadeOut("slow");
+        })
+        */
+    </script>
+
+
+    <script type="text/javascript">
+
+        var loadFile = function (filePath, done) {
+            var xhr = new XMLHttpRequest();
+            xhr.onload = function () { return done(this.response); };
+            xhr.open("GET", filePath, true);
+            xhr.responseType = "arraybuffer";
+            xhr.send();
+        };
+
+        var Module = {
+            preRun: [],
+            postRun: (function () {
+
+                var pack_manager = new Module.PackManager();
+                console.log("Loaded WebAssembly.");
+                loadFile("../../../../gfx/char/raptor/raptor.creature_pack", function (response) {
+                    var byte_array = new Uint8Array(response);
+                    console.log("Loaded CreaturePack Data with size: " + byte_array.byteLength);
+                    var load_bytes = CreatureWASMUtils.heapBytes(Module, byte_array);
+                    var pack_loader = pack_manager.addPackLoader("Raptor", load_bytes.byteOffset, byte_array.byteLength);
+                    var texture = PIXI.Texture.from("../../../../gfx/char/raptor/raptor.png");
+
+                    // Stats
+                    var stats = new Stats();
+                    stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
+                    document.body.appendChild(stats.dom);
+
+                    var w = window.innerWidth * 0.8;
+                    var h = window.innerWidth * 0.8;
+                    // Start PixiJS     
+                    // create a renderer instance.			
+                    var app = new PIXI.Application({
+                        width: w,
+                        height: h,
+                        backgroundColor: 0x363636,
+                        antialias: true,
+                        transparent: false,
+                        resolution: window.devicePixelRatio || 1
+                    });
+                    //Create a container object called the `stage`
+                    var stage = new PIXI.Container();
+
+                    // Add the renderer view element to the DOM
+                    document.body.appendChild(app.renderer.view);
+
+                    // Add CreaturePack objects
+                    var allContainers = []
+                    var numObjs = 200;
+
+                    function randomIntFromInterval(min, max) {
+                        return Math.floor(Math.random() * (max - min + 1) + min);
                     }
-                    curContainer.position.x = curX;
 
-                    curRender.packManager.stepPlayer(curRender.playerId, 1.0);
-                    curRender.refresh();
-                }
+                    for (var i = 0; i < numObjs; i++) {
+                        var creatureContainer = new PIXI.Container();
+                        var setScale = randomIntFromInterval(10, 20);
+                        creatureContainer.scale.set(setScale);
+                        creatureContainer.position.x = randomIntFromInterval(0, w);
+                        creatureContainer.position.y = h * 0.5 + (20 - setScale) * 10;
+                        stage.addChild(creatureContainer);
 
-                stats.end();
+                        var raptor_renderer = new CreaturePackRenderer(pack_manager, "Raptor", texture);
+                        raptor_renderer.packManager.setPlayerActiveAnimation(raptor_renderer.playerId, "clip1");
+                        raptor_renderer.packManager.stepPlayer(raptor_renderer.playerId, randomIntFromInterval(0, 200));
+                        creatureContainer.addChild(raptor_renderer);
+                        creatureContainer.scale.x = creatureContainer.scale.x;
 
-        		// render the stage   
-        		app.renderer.render(stage);
-		    }
-		
-		    animate();                
-    		});		
-    })
-};  
-</script>
+                        var charData = {}
+                        charData["container"] = creatureContainer;
+                        charData["render"] = raptor_renderer;
+                        charData["speed"] = randomIntFromInterval(5, 10);
+                        allContainers.push(charData);
+                    }
+
+                    var text = new PIXI.Text(
+                        "CreaturePack WebAssembly Demo with " + numObjs + " Real-time Mesh Deforming Dinosaurs!",
+                        { font: "30px Arial", fill: "yellow" });
+                    text.position.x = 10;
+                    text.position.y = 42;
+                    stage.addChild(text);
+
+                    var text2 = new PIXI.Text(
+                        "UtahRaptor Artwork: Emily Willoughby (http://emilywilloughby.com)",
+                        { font: "15px Arial", fill: "white" });
+                    text2.position.x = 12;
+                    text2.position.y = text.position.y + 30;
+                    stage.addChild(text2);
+
+
+                    function animate() {
+                        requestAnimationFrame(animate);
+
+                        stats.begin();
+
+                        for (var i = 0; i < numObjs; i++) {
+                            var curObj = allContainers[i];
+                            var curRender = curObj["render"];
+                            var curContainer = curObj["container"];
+                            var curX = curContainer.position.x;
+                            curX -= curObj["speed"];
+                            if (curX < -800) {
+                                curX = w + 300;
+                            }
+                            curContainer.position.x = curX;
+
+                            curRender.packManager.stepPlayer(curRender.playerId, 1.0);
+                            curRender.refresh();
+                        }
+
+                        stats.end();
+
+                        // render the stage   
+                        app.renderer.render(stage);
+                    }
+
+                    animate();
+                });
+            })
+        };
+    </script>
 
 </body>
+
 </html>

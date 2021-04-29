@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" href="../../../../../site/css/main.css">
     <title>PHASER3.JS: Fox-Bat-Horseman Group</title>
     <script src="../v3.54.0/phaser.min.js"></script>
@@ -9,92 +10,93 @@
     <script src="../../../../C2D/CreaturePackModule.js"></script>
     <script src="../CreaturePackPhaser3Obj.js"></script>
 </head>
-   
+
 <body class="bodyDiv">
-<iframe class="navIframe" scrolling="no" src="../../../../../site/nav.html"></iframe>
-<br />
-<br />
+    <iframe class="navIframe" scrolling="no" src="../../../../../site/nav.html"></iframe>
+    <br />
+    <br />
 
-<h2 style="margin-top:2rem;">PHASER3.JS: Fox-Bat-Horseman Group</h2>
+    <h2 style="margin-top:2rem;">PHASER3.JS: Fox-Bat-Horseman Group</h2>
 
-<script>
-var w = window.innerWidth * 0.8;
-var h = window.innerHeight * 0.8;
+    <script>
+        var w = window.innerWidth * 0.8;
+        var h = window.innerHeight * 0.8;
 
-var config = {
-    type: Phaser.AUTO,
-    width: w,
-    height: h,
-    physics: {
-        default: 'arcade',
-        arcade: {
-            gravity: { y: 0 }
+        var config = {
+            type: Phaser.AUTO,
+            width: w,
+            height: h,
+            physics: {
+                default: 'arcade',
+                arcade: {
+                    gravity: { y: 0 }
+                }
+            },
+            scene: {
+                preload: preload,
+                create: create,
+                update: update
+            }
+        };
+
+        var game = new Phaser.Game(config);
+
+        var fox = null;
+        var frames = -1;
+
+        function preload() {
+
+            this.load.binary('horse', '../../../../../gfx/char/horseman/horseman.creature_pack');
+            this.load.image('horse_img', '../../../../../gfx/char/horseman/horseman.png');
+
+            this.load.binary('bat', '../../../../../gfx/char/bat/bat.creature_pack');
+            this.load.image('bat_img', '../../../../../gfx/char/bat/bat.png');
+
+            this.load.binary('fox', '../../../../../gfx/char/fox/fox2x.creature_pack');
+            this.load.binary('fox_img', '../../../../../gfx/char/fox/fox.png');
+
         }
-    },
-    scene: {
-        preload: preload,
-        create: create,
-        update: update
-    }
-};
 
-var game = new Phaser.Game(config);
+        function create() {
+            //this.add.text(10, 0, 'CreaturePack Runtimes for Phaser 3', { fontFamily: '"Roboto Condensed"', fontSize: 32, color: '#FFFF00'  });
+            this.cameras.main.backgroundColor.setTo(56, 56, 56);
 
-var fox = null;
-var frames = -1;
+            horse = new CreaturePackObj(this, w / 2 + 200, h / 1.75, this.cache.binary.get('horse'), 'horse_img');
+            horse.modelScale.x = 0.1;
+            horse.modelScale.y = 0.1;
 
-function preload () {
+            horse.speed = 0.06;
+            horse.pack_renderer.blendToAnimation("run", 0.1);
 
-    this.load.binary('horse', '../../../../../gfx/char/horseman/horseman.creature_pack');
-    this.load.image('horse_img', '../../../../../gfx/char/horseman/horseman.png');
+            fox = new CreaturePackObj(this, w / 2, h / 1.5, this.cache.binary.get('fox'), 'fox_img');
+            fox.modelScale.x = 0.05;
+            fox.modelScale.y = 0.05;
 
-    this.load.binary('bat', '../../../../../gfx/char/bat/bat.creature_pack');
-    this.load.image('bat_img', '../../../../../gfx/char/bat/bat.png');
+            bat = new CreaturePackObj(this, w / 2 + 10, h / 4, this.cache.binary.get('bat'), 'bat_img');
+            bat.modelScale.x = 0.05;
+            bat.modelScale.y = 0.05;
 
-    this.load.binary('fox', '../../../../../gfx/char/fox/fox2x.creature_pack');
-    this.load.binary('fox_img', '../../../../../gfx/char/fox/fox.png');
+            bat.speed = 0.1;
 
-}
+            fox.pack_renderer.blendToAnimation("default", 0.06);
+            horse.pack_renderer.blendToAnimation("default", 0.06);
 
-function create () {
-    //this.add.text(10, 0, 'CreaturePack Runtimes for Phaser 3', { fontFamily: '"Roboto Condensed"', fontSize: 32, color: '#FFFF00'  });
-    this.cameras.main.backgroundColor.setTo(56,56,56);
+        }
 
-    horse = new CreaturePackObj(this, w/2+200, h/1.75, this.cache.binary.get('horse'), 'horse_img');
-    horse.modelScale.x = 0.1;
-    horse.modelScale.y = 0.1;
-
-    horse.speed = 0.06;
-    horse.pack_renderer.blendToAnimation("run", 0.1);
-
-    fox = new CreaturePackObj(this, w/2, h/1.5, this.cache.binary.get('fox'), 'fox_img');
-    fox.modelScale.x = 0.05;
-    fox.modelScale.y = 0.05;
-
-    bat = new CreaturePackObj(this, w/2+10, h/4, this.cache.binary.get('bat'), 'bat_img');
-    bat.modelScale.x = 0.05;
-    bat.modelScale.y = 0.05;
-
-    bat.speed = 0.1;
-    
-    fox.pack_renderer.blendToAnimation("default", 0.06); 
-    horse.pack_renderer.blendToAnimation("default", 0.06);     
-    
-}
-
-function update (time, delta){               
-    ++frames;
-    if(frames % 75 == 0) {
-        fox.pack_renderer.blendToAnimation("run", 0.03);
-        horse.pack_renderer.blendToAnimation("run", 0.03);
-    }
-    else if(frames % 401 == 0) {
-        frames = -1;
-        fox.pack_renderer.blendToAnimation("default", 0.06);            
-        horse.pack_renderer.blendToAnimation("default", 0.06);
-    }
-}
-</script>
+        function update(time, delta) {
+            ++frames;
+            if (frames % 75 == 0) {
+                fox.pack_renderer.blendToAnimation("run", 0.03);
+                horse.pack_renderer.blendToAnimation("run", 0.03);
+            }
+            else if (frames % 401 == 0) {
+                frames = -1;
+                fox.pack_renderer.blendToAnimation("default", 0.06);
+                horse.pack_renderer.blendToAnimation("default", 0.06);
+            }
+        }
+    </script>
 
 </body>
+
 </html>

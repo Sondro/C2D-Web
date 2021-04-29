@@ -35,12 +35,7 @@
 
 class CreaturePackObj extends Phaser.GameObjects.Mesh {
     constructor(scene, x, y, byte_data_in, texture_key, panZVal=7) {
-        super(
-            scene,
-            x,
-            y,
-            texture_key
-        );
+        super(scene, x, y, texture_key);
         this.speed = 0.05;
 
         var byte_array = new Uint8Array(byte_data_in);
@@ -56,18 +51,16 @@ class CreaturePackObj extends Phaser.GameObjects.Mesh {
         var render_uvs = this.pack_renderer.render_uvs;
         var render_colors = this.pack_renderer.render_colors;
 
-		var create_vertices = new Float32Array(render_pts.length);
+        var create_vertices = new Float32Array(render_pts.length);
         var create_uvs = new Float32Array(render_uvs.length);
         var create_colors = new Uint32Array(render_pts.length);
         var create_alphas = new Float32Array(render_pts.length);
 
-        for(var i = 0; i < create_colors.length; i++)
-        {
-            create_colors[i] = 0xFFFFFF;
+        for(var i = 0; i < create_colors.length; i++) {
+            create_colors[i] = 0 xFFFFFF;
         }
 
-        for(var i = 0; i < create_alphas.length; i++)
-        {
+        for(var i = 0; i < create_alphas.length; i++) {
             create_alphas[i] = 1.0;
         }
 
@@ -75,16 +68,16 @@ class CreaturePackObj extends Phaser.GameObjects.Mesh {
         this.addVertices(render_pts, render_uvs, indices);
         this.ignoreDirtyCache = true;
         this.panZ(panZVal);
-        scene.add.existing(this);  
+        scene.add.existing(this);
     }
     getPackRGBA(r, g, b, a) {
-        var ur = ((r * 255.0)|0) & 0xFF;
-        var ug = ((g * 255.0)|0) & 0xFF;
-        var ub = ((b * 255.0)|0) & 0xFF;
-        var ua = ((a * 255.0)|0) & 0xFF;
-        return ((ua << 24) | (ur << 16) | (ug << 8) | ub) >>> 0;
+        var ur =((r * 255.0)|0) & 0 xFF;
+        var ug =((g * 255.0)|0) & 0xFF;
+        var ub =((b * 255.0)|0) & 0xFF;
+        var ua =((a * 255.0)|0) & 0xFF;
+        return((ua << 24) |(ur << 16) |(ug << 8) | ub) >>> 0;
     }
-    preUpdate(time, delta){
+    preUpdate(time, delta) {
         super.preUpdate(time, delta);
 
         this.pack_renderer.stepTime(delta * this.speed);
@@ -98,8 +91,7 @@ class CreaturePackObj extends Phaser.GameObjects.Mesh {
         // Unfortunately, Phaser still does not have a proper efficient way of rendering meshes with indices
         // It seems Phase still "unrolls" the mesh without any considerations for vertices sharing multiple indices
         // This means indices.length == this.getVertexCount() which is not good for performance
-        for(var i = 0; i < indices.length; i++)
-        {
+        for(var i = 0; i < indices.length; i++) {
             var cVertex = this.vertices[i];
             var idx = indices[i] * 2;
             cVertex.x = render_pts[idx];
@@ -107,12 +99,12 @@ class CreaturePackObj extends Phaser.GameObjects.Mesh {
 
             cVertex.u = render_uvs[idx];
             cVertex.v = render_uvs[idx + 1];
-            
+
             var r = render_colors[indices[i] * 4];
             var g = render_colors[indices[i] * 4];
             var b = render_colors[indices[i] * 4];
             cVertex.colors = this.getPackRGBA(r, g, b, 1);
             cVertex.alphas = render_colors[indices[i] * 4 + 3];
-        }                     
+        }
     }
 }

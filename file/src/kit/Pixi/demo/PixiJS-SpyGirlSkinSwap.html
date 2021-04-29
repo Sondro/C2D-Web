@@ -1,152 +1,148 @@
 <!DOCTYPE html>
 <html>
-	<head>
-      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-      <title>PIXI.JS: Spy Girl Skin Swap</title>
-      <link rel="stylesheet" href="../../../../site/css/main.css"> 
-        
-      <script src="../../../C2D/util/gl-matrix.js"></script>   
-      <script src="../../../C2D/util/flatbuffers.js"></script>   
-      <script src="../../../C2D/CreatureFlatData_generated.js"></script>   
-      <script src="../../../C2D/CreatureMeshBone.js"></script>   
 
-      <script src="../v6.0.2/pixi.min.js"></script> 
-      <script src="../CreaturePixiJSRefRenderer.js"></script> 
-  </head>
-  
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>PIXI.JS: Spy Girl Skin Swap</title>
+	<link rel="stylesheet" href="../../../../site/css/main.css">
+
+	<script src="../../../C2D/util/gl-matrix.js"></script>
+	<script src="../../../C2D/util/flatbuffers.js"></script>
+	<script src="../../../C2D/CreatureFlatData_generated.js"></script>
+	<script src="../../../C2D/CreatureMeshBone.js"></script>
+
+	<script src="../v6.0.2/pixi.min.js"></script>
+	<script src="../CreaturePixiJSRefRenderer.js"></script>
+</head>
+
 <body class="bodyDiv">
-<iframe class="navIframe" scrolling="no" src="../../../../site/nav.html"></iframe>
-<br />
-<br />
+	<iframe class="navIframe" scrolling="no" src="../../../../site/nav.html"></iframe>
+	<br />
+	<br />
 
-<h2 style="margin-top:2rem;">PIXI.JS: Spy Girl Skin Swap</h2>
+	<h2 style="margin-top:2rem;">PIXI.JS: Spy Girl Skin Swap</h2>
 
-<script>
+	<script>
 
-	var loadFile = function (filePath, done) {
-	    var xhr = new XMLHttpRequest();
-	    xhr.onload = function () { return done(this.responseText); };
-	    xhr.open("GET", filePath, true);
-	    xhr.send();
-	};
-	
-	var char_json = null;
-	var meta_json = null;
-		loadFile('../../../../gfx/char/spyGirl/spyGirl.json', function(responseText) {
+		var loadFile = function (filePath, done) {
+			var xhr = new XMLHttpRequest();
+			xhr.onload = function () { return done(this.responseText); };
+			xhr.open("GET", filePath, true);
+			xhr.send();
+		};
+
+		var char_json = null;
+		var meta_json = null;
+		loadFile('../../../../gfx/char/spyGirl/spyGirl.json', function (responseText) {
 			char_json = JSON.parse(responseText);
-		
-		loadFile('../../../../gfx/char/spyGirl/spyGirl.mdata', function(responseText) {
-			meta_json = JSON.parse(responseText);
-			runApp();
-		});		
-	});
 
-
-	function runApp() {
-		var new_creature = new Creature(char_json, false);
-	
-		var new_animation_1 = new CreatureAnimation(char_json, "cape", false);
-		var new_manager = new CreatureManager(new_creature);
-		new_manager.AddAnimation(new_animation_1);
-		new_manager.SetActiveAnimationName("cape", false);
-		new_manager.SetShouldLoop(true);
-		new_manager.SetIsPlaying(true);
-		new_manager.RunAtTime(0);
-		
-		var meta_data = CreatureModuleUtils.BuildCreatureMetaData(meta_json);
-		new_creature.SetMetaData(meta_data);
-
-		// Events Callbacks setup ( Shows you how to setup event callbacks. You can either load it in from 
-		// MetaData OR add it manually yourself after the character is loaded )
-		var game_controller = new CreatureGameController(meta_data);
-		game_controller.BuildFrameCallbacks( function(animClipName, name)
-		{
-			// You are given an input animation clip name and the event name
-			// Your job here is to return another function that will be triggered 
-			// when the event fires. Here we just return null but return a valid function
-			// for your own purposes
-			return null;
+			loadFile('../../../../gfx/char/spyGirl/spyGirl.mdata', function (responseText) {
+				meta_json = JSON.parse(responseText);
+				runApp();
+			});
 		});
 
-		// You can also add in your event trigger manually/procedurally from code like this
-		game_controller.AddFrameCallback("cape", "fireEvent1", 30, 
-			function(eventName, run_time)
-			{
-				console.log("Event callback triggered: " + eventName + " at frame: " + run_time);
+
+		function runApp() {
+			var new_creature = new Creature(char_json, false);
+
+			var new_animation_1 = new CreatureAnimation(char_json, "cape", false);
+			var new_manager = new CreatureManager(new_creature);
+			new_manager.AddAnimation(new_animation_1);
+			new_manager.SetActiveAnimationName("cape", false);
+			new_manager.SetShouldLoop(true);
+			new_manager.SetIsPlaying(true);
+			new_manager.RunAtTime(0);
+
+			var meta_data = CreatureModuleUtils.BuildCreatureMetaData(meta_json);
+			new_creature.SetMetaData(meta_data);
+
+			// Events Callbacks setup ( Shows you how to setup event callbacks. You can either load it in from 
+			// MetaData OR add it manually yourself after the character is loaded )
+			var game_controller = new CreatureGameController(meta_data);
+			game_controller.BuildFrameCallbacks(function (animClipName, name) {
+				// You are given an input animation clip name and the event name
+				// Your job here is to return another function that will be triggered 
+				// when the event fires. Here we just return null but return a valid function
+				// for your own purposes
+				return null;
+			});
+
+			// You can also add in your event trigger manually/procedurally from code like this
+			game_controller.AddFrameCallback("cape", "fireEvent1", 30,
+				function (eventName, run_time) {
+					console.log("Event callback triggered: " + eventName + " at frame: " + run_time);
+				}
+			);
+
+			// create an new instance of a pixi stage
+			var stage = new PIXI.Container();
+
+			// create a renderer instance.
+			var w = window.innerWidth * 0.8;
+			var h = window.innerHeight * 0.8;
+			var app = new PIXI.Application({
+				width: w,
+				height: h,
+				backgroundColor: 0x363636,
+				antialias: true,
+				transparent: false,
+				resolution: window.devicePixelRatio || 1
+			});
+
+			// add the renderer view element to the DOM
+			document.body.appendChild(app.renderer.view);
+
+			// create a texture from an image path
+			var texture = PIXI.Texture.from("../../../../gfx/char/spyGirl/spyGirl.png");
+
+			var creatureContainer = new PIXI.Container();
+			creatureContainer.position.x = w / 2;
+			creatureContainer.position.y = h / 1.6;
+
+			creatureContainer.scale.set(32.0);
+			stage.addChild(creatureContainer);
+
+			var new_creature_renderer = new CreatureRenderer(new_manager, texture);
+			//new_creature_renderer.EnableSkinSwap("cape", true);
+
+			creatureContainer.addChild(new_creature_renderer);
+
+			var frames = -1;
+			var swap_type = 0;
+			function animate() {
+				requestAnimationFrame(animate);
+
+				// Step the animation
+				new_manager.Update(0.05);
+				// Fire any events
+				game_controller.ProcessCallbacks(new_manager);
+
+				new_creature_renderer.refresh();
+
+				// render the stage
+				app.renderer.render(stage);
+
+				++frames;
+				if (frames % 100 == 0) {
+					swap_type += 1;
+					if (swap_type % 3 == 0) {
+						new_creature_renderer.EnableSkinSwap("dressSword", true);
+					}
+					else if (swap_type % 3 == 1) {
+						new_creature_renderer.EnableSkinSwap("defaultGun", true);
+					}
+					else if (swap_type % 3 == 2) {
+						new_creature_renderer.EnableSkinSwap("cape", true);
+					}
+				}
 			}
-		);
 
-		// create an new instance of a pixi stage
-		var stage = new PIXI.Container();
-	
-		// create a renderer instance.
-		var w = window.innerWidth * 0.8;
-        var h = window.innerHeight * 0.8;
-		var app = new PIXI.Application({
-			width: w, 
-			height: h, 
-			backgroundColor: 0x363636,
-			antialias: true,
-			transparent: false, 
-			resolution: window.devicePixelRatio || 1
-		});
+			animate();
+		};
 
-		// add the renderer view element to the DOM
-		document.body.appendChild(app.renderer.view);
-	
-		// create a texture from an image path
-		var texture = PIXI.Texture.from("../../../../gfx/char/spyGirl/spyGirl.png");
-	
-		var creatureContainer = new PIXI.Container();
-		creatureContainer.position.x = w / 2;
-		creatureContainer.position.y = h / 1.6;
-	
-		creatureContainer.scale.set(32.0);
-		stage.addChild(creatureContainer);
-	
-		var new_creature_renderer = new CreatureRenderer(new_manager, texture);
-		//new_creature_renderer.EnableSkinSwap("cape", true);
-
-		creatureContainer.addChild(new_creature_renderer);
-	
-		var frames = -1;
-		var swap_type = 0;
-		function animate() {
-			requestAnimationFrame(animate);
-			
-			// Step the animation
-			new_manager.Update(0.05);
-			// Fire any events
-			game_controller.ProcessCallbacks(new_manager);
-
-			new_creature_renderer.refresh();
-	
-			// render the stage
-			app.renderer.render(stage);
-			
-			++frames;
-			if(frames % 100 == 0)
-			{
-				swap_type += 1;
-				if(swap_type % 3 == 0)
-				{ 
-					new_creature_renderer.EnableSkinSwap("dressSword", true);					
-				}
-				else if(swap_type % 3 == 1)
-				{
-					new_creature_renderer.EnableSkinSwap("defaultGun", true);										
-				}
-				else if(swap_type % 3 == 2)
-				{
-					new_creature_renderer.EnableSkinSwap("cape", true);					
-				}
-			}
-		}
-	
-		animate();
-	};
-
-</script>
+	</script>
 
 </body>
-</html> 
+
+</html>

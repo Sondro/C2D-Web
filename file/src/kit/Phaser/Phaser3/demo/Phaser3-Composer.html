@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" href="../../../../../site/css/main.css">
     <title>PHASER3.JS: Composer</title>
     <script src="../../../../C2D/util/msgpack.js"></script>
@@ -12,52 +13,53 @@
 </head>
 
 <body class="bodyDiv">
-<iframe class="navIframe" scrolling="no" src="../../../../../site/nav.html"></iframe>
-<br />
-<br />
+    <iframe class="navIframe" scrolling="no" src="../../../../../site/nav.html"></iframe>
+    <br />
+    <br />
 
-<h2 style="margin-top:2rem;">PHASER3.JS: Composer</h2>
+    <h2 style="margin-top:2rem;">PHASER3.JS: Composer</h2>
 
-<script>
-    var w = window.innerWidth * 0.8;
-    var h = window.innerHeight * 0.8;
-    
-    var config = {
-        type: Phaser.AUTO,
-        width: w,
-        height: h,
-        physics: {
-            default: 'arcade',
-            arcade: {
-                gravity: { y: 0 }
+    <script>
+        var w = window.innerWidth * 0.8;
+        var h = window.innerHeight * 0.8;
+
+        var config = {
+            type: Phaser.AUTO,
+            width: w,
+            height: h,
+            physics: {
+                default: 'arcade',
+                arcade: {
+                    gravity: { y: 0 }
+                }
+            },
+            scene: {
+                preload: preload,
+                create: create,
             }
-        },
-        scene: {
-            preload: preload,
-            create: create,
+        };
+
+
+        var game = new Phaser.Game(config);
+        var creature_char = null;
+
+        function preload() {
+            // Artwork + Animation by: 捌壹
+            this.load.binary('char', '../../../../../gfx/char/composer/composer.creature_pack');
+            this.load.binary('texture', '../../../../../gfx/char/composer/composer.png');
         }
-    };
 
+        function create() {
+            //this.add.text(10, 0, 'CreaturePack Runtimes for Phaser 3', { fontFamily: '"Roboto Condensed"', fontSize: 32, color: '#FFFF00'  });
+            this.cameras.main.backgroundColor.setTo(56, 56, 56);
 
-var game = new Phaser.Game(config);
-var creature_char = null;
-
-function preload () {
-    // Artwork + Animation by: 捌壹
-    this.load.binary('char', '../../../../../gfx/char/composer/composer.creature_pack');
-    this.load.binary('texture', '../../../../../gfx/char/composer/composer.png');
-}
-
-function create () {
-    //this.add.text(10, 0, 'CreaturePack Runtimes for Phaser 3', { fontFamily: '"Roboto Condensed"', fontSize: 32, color: '#FFFF00'  });
-    this.cameras.main.backgroundColor.setTo(56,56,56);
-
-    // Load our CreaturePack character
-    creature_char = new CreaturePackObj(this, 480, 300, this.cache.binary.get('char'), 'texture');
-    creature_char.modelScale.x = 0.3;
-    creature_char.modelScale.y = 0.3;
-}
-</script>
+            // Load our CreaturePack character
+            creature_char = new CreaturePackObj(this, 480, 300, this.cache.binary.get('char'), 'texture');
+            creature_char.modelScale.x = 0.3;
+            creature_char.modelScale.y = 0.3;
+        }
+    </script>
 
 </body>
+
 </html>

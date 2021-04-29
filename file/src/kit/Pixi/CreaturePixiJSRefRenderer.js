@@ -33,31 +33,23 @@
  * RUNTIMES.
  *****************************************************************************/
 
-function CreatureRenderer(manager_in, texture_in)
-{
-	this.creature_manager = manager_in;
-	var target_creature = this.creature_manager.target_creature;		
-	var mIndices = new Uint16Array(target_creature.global_indices.length);
-	for(var i = 0; i < mIndices.length; i++)
-	{
-		mIndices[i] = target_creature.global_indices[i];
-	}
+function CreatureRenderer(manager_in, texture_in) {
+    this.creature_manager = manager_in;
+    var target_creature = this.creature_manager.target_creature;
+    var mIndices = new Uint16Array(target_creature.global_indices.length);
+    for(var i = 0; i < mIndices.length; i++) {
+        mIndices[i] = target_creature.global_indices[i];
+    }
 
-	PIXI.SimpleMesh.call(
-		this, 
-		texture_in, 
-		new Float32Array(target_creature.total_num_pts * 2),
-		new Float32Array(target_creature.total_num_pts * 2),
-		mIndices,
-		PIXI.DRAW_MODES.TRIANGLES);
-	
-	this.geometry.indexBuffer.static = false;
-	this.blendMode = PIXI.BLEND_MODES.NORMAL;
-	this.creatureBoundsMin = new PIXI.Point(0,0);
-	this.creatureBoundsMax = new PIXI.Point(0,0);
-	
-	this.colors = new Float32Array([1,1,1,1]);
-	this.UpdateRenderData(target_creature.global_pts, target_creature.global_uvs);
+    PIXI.SimpleMesh.call(this, texture_in, new Float32Array(target_creature.total_num_pts * 2), new Float32Array(target_creature.total_num_pts * 2), mIndices, PIXI.DRAW_MODES.TRIANGLES);
+
+    this.geometry.indexBuffer.static = false;
+    this.blendMode = PIXI.BLEND_MODES.NORMAL;
+    this.creatureBoundsMin = new PIXI.Point(0,0);
+    this.creatureBoundsMax = new PIXI.Point(0,0);
+
+    this.colors = new Float32Array([1,1,1,1]);
+    this.UpdateRenderData(target_creature.global_pts, target_creature.global_uvs);
 };
 
 // constructor
@@ -65,27 +57,23 @@ CreatureRenderer.prototype = Object.create(PIXI.SimpleMesh.prototype);
 CreatureRenderer.prototype.constructor = CreatureRenderer;
 
 
-CreatureRenderer.prototype.UpdateCreatureBounds = function()
-{
-	// update bounds based off world transform matrix
-	var target_creature = this.creature_manager.target_creature;
-		
-	target_creature.ComputeBoundaryMinMax();
-	this.creatureBoundsMin.set(target_creature.boundary_min[0],
-								-target_creature.boundary_min[1]);
-	this.creatureBoundsMax.set(target_creature.boundary_max[0],
-								-target_creature.boundary_max[1]);
-								
-	
-	this.worldTransform.apply(this.creatureBoundsMin, this.creatureBoundsMin);	
-	this.worldTransform.apply(this.creatureBoundsMax, this.creatureBoundsMax);				
+CreatureRenderer.prototype.UpdateCreatureBounds = function() {
+    // update bounds based off world transform matrix
+    var target_creature = this.creature_manager.target_creature;
+
+    target_creature.ComputeBoundaryMinMax();
+    this.creatureBoundsMin.set(target_creature.boundary_min[0], -target_creature.boundary_min[1]);
+    this.creatureBoundsMax.set(target_creature.boundary_max[0], -target_creature.boundary_max[1]);
+
+
+    this.worldTransform.apply(this.creatureBoundsMin, this.creatureBoundsMin);
+    this.worldTransform.apply(this.creatureBoundsMax, this.creatureBoundsMax);
 };
 
-CreatureRenderer.prototype.GetPixelScaling = function(desired_x, desired_y)
-{
-	// compute pixel scaling relative to mesh scaling
-	var target_creature = this.creature_manager.target_creature;		
-	target_creature.ComputeBoundaryMinMax();
+CreatureRenderer.prototype.GetPixelScaling = function(desired_x, desired_y) {
+    // compute pixel scaling relative to mesh scaling
+    var target_creature = this.creature_manager.target_creature;
+    target_creature.ComputeBoundaryMinMax();
 
     var mesh_size_x = target_creature.boundary_max[0] - target_creature.boundary_min[0];
     var mesh_size_y = target_creature.boundary_max[1] - target_creature.boundary_min[1];
@@ -96,73 +84,66 @@ CreatureRenderer.prototype.GetPixelScaling = function(desired_x, desired_y)
     return [scale_x, scale_y];
 };
 
-CreatureRenderer.prototype.refresh = function()
-{
-	var target_creature = this.creature_manager.target_creature;
-	
-	var read_pts = target_creature.render_pts;
-	var read_uvs = target_creature.global_uvs;
-	
-	this.UpdateRenderData(read_pts, read_uvs);
-	this.UpdateCreatureBounds();
+CreatureRenderer.prototype.refresh = function() {
+    var target_creature = this.creature_manager.target_creature;
 
-	var setUVs = this.geometry.getBuffer('aTextureCoord');
-	setUVs.update();
-	this.autoUpdate = true;
+    var read_pts = target_creature.render_pts;
+    var read_uvs = target_creature.global_uvs;
+
+    this.UpdateRenderData(read_pts, read_uvs);
+    this.UpdateCreatureBounds();
+
+    var setUVs = this.geometry.getBuffer('aTextureCoord');
+    setUVs.update();
+    this.autoUpdate = true;
 };
 
-CreatureRenderer.prototype.EnableSkinSwap = function(swap_name_in, active)
-{
-	var target_creature = this.creature_manager.target_creature;
-	target_creature.EnableSkinSwap(swap_name_in, active);
+CreatureRenderer.prototype.EnableSkinSwap = function(swap_name_in, active) {
+    var target_creature = this.creature_manager.target_creature;
+    target_creature.EnableSkinSwap(swap_name_in, active);
 
-	var setIndices = this.geometry.indexBuffer.data;
+    var setIndices = this.geometry.indexBuffer.data;
 
-	if(target_creature.final_skin_swap_indices !== null) {
-		//console.log(target_creature.final_skin_swap_indices.length);	
-		setIndices = new Uint16Array(target_creature.final_skin_swap_indices.length);
-		for(var i = 0; i < setIndices.length; i++)
-		{
-		setIndices[i] = target_creature.final_skin_swap_indices[i];
-		}
-		this.geometry.indexBuffer.update();
-	} 
+    if(target_creature.final_skin_swap_indices !== null) {
+        // console.log(target_creature.final_skin_swap_indices.length);
+        setIndices = new Uint16Array(target_creature.final_skin_swap_indices.length);
+        for(var i = 0; i < setIndices.length; i++) {
+            setIndices[i] = target_creature.final_skin_swap_indices[i];
+        }
+        this.geometry.indexBuffer.update();
+    }
 };
 
-CreatureRenderer.prototype.DisableSkinSwap = function()
-{
-	var target_creature = this.creature_manager.target_creature;
-	target_creature.DisableSkinSwap();
-	var setIndices = this.geometry.indexBuffer.data;
-	setIndices = new Uint16Array(target_creature.global_indices.length);
-	for(var i = 0; i < setIndices.length; i++)
-	{
-		setIndices[i] = target_creature.global_indices[i];
-	}
-	this.geometry.indexBuffer.update();
+CreatureRenderer.prototype.DisableSkinSwap = function() {
+    var target_creature = this.creature_manager.target_creature;
+    target_creature.DisableSkinSwap();
+    var setIndices = this.geometry.indexBuffer.data;
+    setIndices = new Uint16Array(target_creature.global_indices.length);
+    for(var i = 0; i < setIndices.length; i++) {
+        setIndices[i] = target_creature.global_indices[i];
+    }
+    this.geometry.indexBuffer.update();
 };
 
-CreatureRenderer.prototype.UpdateRenderData = function(inputVerts, inputUVs)
-{
-	var target_creature = this.creature_manager.target_creature;
+CreatureRenderer.prototype.UpdateRenderData = function(inputVerts, inputUVs) {
+    var target_creature = this.creature_manager.target_creature;
 
-	var pt_index = 0;
-	var uv_index = 0;
-	
-	var write_pt_index = 0;
-	var setUVs = this.geometry.getBuffer('aTextureCoord').data;
-	
-	for(var i = 0; i < target_creature.total_num_pts; i++)
-	{
-		this.vertices[write_pt_index] = inputVerts[pt_index];
-		this.vertices[write_pt_index + 1] = -inputVerts[pt_index + 1];
-		
-		setUVs[uv_index] = inputUVs[uv_index];
-		setUVs[uv_index + 1] = inputUVs[uv_index + 1];
-		
-		pt_index += 3;
-		uv_index += 2;
-		
-		write_pt_index += 2;
-	}
+    var pt_index = 0;
+    var uv_index = 0;
+
+    var write_pt_index = 0;
+    var setUVs = this.geometry.getBuffer('aTextureCoord').data;
+
+    for(var i = 0; i < target_creature.total_num_pts; i++) {
+        this.vertices[write_pt_index] = inputVerts[pt_index];
+        this.vertices[write_pt_index + 1] = -inputVerts[pt_index + 1];
+
+        setUVs[uv_index] = inputUVs[uv_index];
+        setUVs[uv_index + 1] = inputUVs[uv_index + 1];
+
+        pt_index += 3;
+        uv_index += 2;
+
+        write_pt_index += 2;
+    }
 };
