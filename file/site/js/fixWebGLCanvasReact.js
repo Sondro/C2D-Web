@@ -1,5 +1,5 @@
 const componentDidMount = () => {
-  setTimeout(() => { 
+  setTimeout(() => {
     this.addCanvasWebGLContextLossEventListener();
   }, 2500);
 };
