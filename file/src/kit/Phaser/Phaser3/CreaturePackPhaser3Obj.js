@@ -57,7 +57,7 @@ class CreaturePackObj extends Phaser.GameObjects.Mesh {
         var create_alphas = new Float32Array(render_pts.length);
 
         for(var i = 0; i < create_colors.length; i++) {
-            create_colors[i] = 0 xFFFFFF;
+            create_colors[i] = 0xFFFFFF;
         }
 
         for(var i = 0; i < create_alphas.length; i++) {
@@ -71,7 +71,7 @@ class CreaturePackObj extends Phaser.GameObjects.Mesh {
         scene.add.existing(this);
     }
     getPackRGBA(r, g, b, a) {
-        var ur =((r * 255.0)|0) & 0 xFF;
+        var ur =((r * 255.0)|0) & 0xFF;
         var ug =((g * 255.0)|0) & 0xFF;
         var ub =((b * 255.0)|0) & 0xFF;
         var ua =((a * 255.0)|0) & 0xFF;

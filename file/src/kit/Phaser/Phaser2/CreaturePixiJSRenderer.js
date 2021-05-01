@@ -238,7 +238,7 @@ CreatureRenderer.prototype.SetAnchorPoint = function(x, y, anim_clip_name_in) {
     var target_size_y = this.boundary_max[1];
 
 
-    if(x > = 0 && x !== null) {
+    if(x >= 0 && x !== null) {
         target_size_x = (this.boundary_max[0] - (mesh_size_x * (x)));
     }
     else if(x < 0) {
@@ -253,7 +253,7 @@ CreatureRenderer.prototype.SetAnchorPoint = function(x, y, anim_clip_name_in) {
         }
     }
 
-    if(y > = 0 && y !== null) {
+    if(y >= 0 && y !== null) {
         target_size_y = (this.boundary_max[1] - (mesh_size_y * (y)));
     }
     else if(y < 0) {

@@ -587,7 +587,7 @@ flatbuffers.Builder.prototype.endObject = function() {
     var vtableloc = this.offset();
 
     // Write out the current vtable.
-    for(var i = this.vtable_in_use - 1; i > = 0; i--) {
+    for(var i = this.vtable_in_use - 1; i >= 0; i--) {
         // Offset relative to the start of the table.
         this.addInt16(this.vtable[i] != 0 ? vtableloc - this.vtable[i] : 0);
     }
@@ -647,7 +647,7 @@ flatbuffers.Builder.prototype.finish = function(root_table, file_identifier) {
         if(file_identifier.length != flatbuffers.FILE_IDENTIFIER_LENGTH) {
             throw new Error('FlatBuffers: file identifier must be length ' + flatbuffers.FILE_IDENTIFIER_LENGTH);
         }
-        for(var i = flatbuffers.FILE_IDENTIFIER_LENGTH - 1; i > = 0; i--) {
+        for(var i = flatbuffers.FILE_IDENTIFIER_LENGTH - 1; i >= 0; i--) {
             this.writeInt8(file_identifier.charCodeAt(i));
         }
     }
@@ -724,7 +724,7 @@ flatbuffers.Builder.prototype.createString = function(s) {
 
             // Decode UTF-16
             var a = s.charCodeAt(i++);
-            if(a < 0xD800 || a > = 0xDC00) {
+            if(a < 0xD800 || a >= 0xDC00) {
                 codePoint = a;
             }
             else {
