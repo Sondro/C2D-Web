@@ -1,3 +1,4 @@
+  <script type="text/javascript">
   componentDidMount() {
     setTimeout(() => { 
       this.addCanvasWebGLContextLossEventListener();
@@ -7,3 +8,4 @@
   componentWillUnmount() {
     this.removeCanvasWebGLContextLossEventListener();
   }
+  </script>

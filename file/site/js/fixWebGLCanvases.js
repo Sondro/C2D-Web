@@ -1,3 +1,4 @@
+<script type="text/javascript">
  simulateWebGLContextLoss = () => {
     // 
     // simulate loss of WebGL context, for the purposes
@@ -23,3 +24,4 @@
       }, 5000);
     }
   }
+</script>
