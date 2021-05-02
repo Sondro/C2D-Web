@@ -36,7 +36,7 @@
       xhr.send();
     };
 
-    var createScene = function (canvas, engine, manager_in) {
+    var initScene = function (canvas, engine, manager_in) {
       // Now create a basic Babylon Scene object 
       var scene = new BABYLON.Scene(engine);
       scene.clearColor = new BABYLON.Color3(0.26, 0.26, 0.26);
@@ -143,8 +143,8 @@
           // Load the BABYLON 3D engine
           var engine = new BABYLON.Engine(canvas, true);
 
-          // Now, call the createScene function that you just finished creating
-          var data = createScene(canvas, engine, pack_manager);
+          // Now, call the initScene function that you just finished creating
+          var data = initScene(canvas, engine, pack_manager);
 
           // Set active animation
           pack_manager.setPlayerActiveAnimation(data.creature_renderer.playerId, "controlRun");

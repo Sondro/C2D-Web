@@ -3,7 +3,7 @@
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>BABYLON.JS: Ice Demon</title>
+	<title>BABYLON.JS: Spy Girl Skin Swap</title>
 	<link rel="stylesheet" href="../../../../site/css/main.css">
 	<script src="../babylon.js"></script>
 	<script src="../babylon.gui.min.js"></script>
@@ -24,20 +24,48 @@
 	<br />
 	<br />
 
-	<h2 style="margin-top:2rem;">BABYLON.JS: Ice Demon</h2>
+	<h2 style="margin-top:2rem;">BABYLON.JS: Spy Girl Skin Swap</h2>
 
 	<canvas id="renderCanvas"></canvas>
 
 	<script>
+		var xobj2 = new XMLHttpRequest();
+		xobj2.overrideMimeType("application/json");
+		xobj2.open('GET', '../../../../gfx/char/spyGirl/spyGirl.mdata', true); // Replace 'my_data' with the path to your file
 
 		var xobj = new XMLHttpRequest();
 		xobj.overrideMimeType("application/json");
+		xobj.open('GET', '../../../../gfx/char/spyGirl/spyGirl.json', true); // Replace 'my_data' with the path to your file
 
-		// Artwork by: Katarzyna Zalecka [http://kasia88.deviantart.com], Attribution-ShareAlike 3.0 Unported
-		// Download Asset Files here: http://www.kestrelmoon.com/creaturedocs/Animation_Samples_And_Examples/Samples_And_Videos.html
-		xobj.open('GET', '../../../../gfx/char/iceDemon/iceDemon.json', true); // Replace 'my_data' with the path to your file
+		var new_creature;
+		var meta_data;
+		var game_controller;
 
-		xobj.onreadystatechange = function () {
+		xobj2.onreadystatechange = function () {
+
+			meta_data = CreatureModuleUtils.BuildCreatureMetaData(xobj2);
+			new_creature.SetMetaData(meta_data);
+
+			// Events Callbacks setup ( Shows you how to setup event callbacks. You can either load it in from 
+			// MetaData OR add it manually yourself after the character is loaded )
+			game_controller = new CreatureGameController(meta_data);
+			game_controller.BuildFrameCallbacks(function (animClipName, name) {
+				// You are given an input animation clip name and the event name
+				// Your job here is to return another function that will be triggered 
+				// when the event fires. Here we just return null but return a valid function
+				// for your own purposes
+				return null;
+			});
+
+			// You can also add in your event trigger manually/procedurally from code like this
+			game_controller.AddFrameCallback("cape", "fireEvent1", 30,
+				function (eventName, run_time) {
+					console.log("Event callback triggered: " + eventName + " at frame: " + run_time);
+				}
+			);
+		}
+
+		xobj.onreadystatechange = function () {			
 			if (xobj.readyState == 4 && xobj.status == "200") {
 				// Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
 				//            callback(xobj.responseText);
@@ -87,9 +115,6 @@
 					engine.resize();
 				});
 			}
-		};
-		xobj.send(null);
-
 
 		// This begins the creation of a function that we will 'call' just after it's built
 		var initScene = function (canvas, engine) {
@@ -129,6 +154,44 @@
 			return { "scene": scene, "creature_texture": creature_texture };
 
 		};  // End of initScene function
+
+		var frames = -1;
+		var swap_type = 0;
+
+		var animateScene = function () {
+			new_manager.Update(0.05);
+
+			// Fire any events
+			//game_controller.ProcessCallbacks(new_manager);
+
+			//new_creature_renderer.refresh();
+
+			++frames;
+			if (frames % 100 == 0) {
+				swap_type += 1;
+				if (swap_type % 3 == 0) {
+					new_creature_renderer.EnableSkinSwap("dressSword", true);
+				}
+				else if (swap_type % 3 == 1) {
+					//new_creature_renderer.EnableSkinSwap("defaultGun", true);										
+				}
+				else if (swap_type % 3 == 2) {
+					//new_creature_renderer.EnableSkinSwap("cape", true);					
+				}
+			}
+
+			new_creature_renderer.UpdateData();
+
+			requestAnimationFrame(animateScene);
+
+			renderer.render(scene, camera);
+		};
+
+		initScene();
+		animateScene();
+	};
+	xobj.send(null);
+
 	</script>
 
 </body>

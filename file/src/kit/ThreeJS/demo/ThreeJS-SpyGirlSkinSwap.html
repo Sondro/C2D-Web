@@ -98,7 +98,7 @@
 				var new_manager;
 				var new_creature_renderer;
 
-				function initScene() {
+				var initScene = function () {
 
 					// Create scene
 					scene = new THREE.Scene();
@@ -149,7 +149,7 @@
 					// Flip creature to the right
 					new_creature_renderer.renderMesh.scale.x = -1;
 
-				}
+				};
 				var frames = -1;
 				var swap_type = 0;
 
