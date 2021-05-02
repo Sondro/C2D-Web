@@ -7,15 +7,14 @@
       .loader {
           transition: opacity 0.75s linear;
           position: absolute;
-          left: 50%;
-          top: 50%;
+          left: 45%;
+          top: 25rem;
           z-index: -1;
-          margin: -75px 0 0 -75px;
-          border: 16px solid #f3f3f3;
+          border: 1rem solid #f3f3f3;
           border-radius: 50%;
-          border-top: 16px solid orange;
-          width: 120px;
-          height: 120px;
+          border-top: 1rem solid orange;
+          width: 10%;
+          height: 10%;
           animation: spin 2s linear infinite;
       }
 
@@ -32,8 +31,9 @@
   </head>
   
   <body class="bodyDiv">
+    <div style=" padding-top:100%; width:100%; position:relative;">
       <div class="loader"></div>
-  
+    </div>
       <script type="text/javascript">
           let loaded = false;
   

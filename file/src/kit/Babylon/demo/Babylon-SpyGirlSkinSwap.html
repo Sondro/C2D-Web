@@ -19,7 +19,7 @@
 </head>
 
 <body class="bodyDiv">
-	<iframe id ="iframeGLspinner" style="background-color:rgba(0,0,0,0); z-index:-1; width:80%; height:100%; border:none; position:fixed;" scrolling="no" src="../../../../site/ui/spinner.html"></iframe>
+	<iframe id ="iframeGLspinner" style="background-color:rgba(0,0,0,0); z-index:-1; width:100%; border:none; position:relative;" scrolling="no" src="../../../../site/ui/spinner.html"></iframe>
 	<iframe class="navIframe" scrolling="no" src="../../../../site/ui/nav.html"></iframe>
 	<br />
 	<br />
@@ -40,9 +40,10 @@
 		var new_creature;
 		var meta_data;
 		var game_controller;
-
+		var new_manager;
+		var new_creature_renderer;
+		
 		xobj2.onreadystatechange = function () {
-
 			meta_data = CreatureModuleUtils.BuildCreatureMetaData(xobj2);
 			new_creature.SetMetaData(meta_data);
 
@@ -63,7 +64,8 @@
 					console.log("Event callback triggered: " + eventName + " at frame: " + run_time);
 				}
 			);
-		}
+		};
+
 
 		xobj.onreadystatechange = function () {			
 			if (xobj.readyState == 4 && xobj.status == "200") {
@@ -74,11 +76,12 @@
 				var actual_JSON = JSON.parse(response);
 				//document.write("Loaded JSON file: ");
 
-				var new_creature = new Creature(actual_JSON, false);
+				new_creature = new Creature(actual_JSON, false);
+				xobj2.send(null);
 
 				var new_animation_1 = new CreatureAnimation(actual_JSON, "default", false);
 
-				var new_manager = new CreatureManager(new_creature);
+				new_manager = new CreatureManager(new_creature);
 				new_manager.AddAnimation(new_animation_1);
 				new_manager.SetActiveAnimationName("default", false);
 				new_manager.SetShouldLoop(true);
@@ -91,81 +94,11 @@
 				// Load the BABYLON 3D engine
 				var engine = new BABYLON.Engine(canvas, true);
 
-				// This begins the creation of a function that we will 'call' just after it's built
-				
-				var initScene = function (canvas, engine) {
-
-					// Now create a basic Babylon Scene object 
-					var scene = new BABYLON.Scene(engine);
-					scene.clearColor = new BABYLON.Color3(0.26, 0.26, 0.26);
-
-					// This creates and positions a free camera
-					var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 0, -25), scene);
-
-					// This targets the camera to scene origin
-					camera.setTarget(new BABYLON.Vector3.Zero());
-
-					// This attaches the camera to the canvas
-					camera.attachControl(canvas, false);
-
-					// This creates a light, aiming 0,1,0 - to the sky.
-					var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
-
-					// Dim the light a small amount
-					light.intensity = 0;
-
-					// creature
-					var creature_texture = new BABYLON.StandardMaterial("creatureTexture", scene);
-
-					//creature_texture.emissiveColor = new BABYLON.Color3(1, 1, 1);
-					creature_texture.diffuseTexture = new BABYLON.Texture("../../../../gfx/char/spyGirl/spyGirl.png", scene);
-					creature_texture.diffuseTexture.hasAlpha = true;
-					// Smooth alpha:
-					creature_texture.useAlphaFromDiffuseTexture = true;
-					creature_texture.emissiveTexture = new BABYLON.Texture("../../../../gfx/char/spyGirl/spyGirl.png", scene);
-					creature_texture.emissiveColor = new BABYLON.Color3(1, 1, 1);
-					creature_texture.backFaceCulling = false;
-
-					// Leave this function
-					return { "scene": scene, "creature_texture": creature_texture };
-
-				};  // End of initScene function
-
-				var frames = -1;
-				var swap_type = 0;
-
-				var animateScene = function () {
-					new_manager.Update(0.05);
-
-					// Fire any events
-					//game_controller.ProcessCallbacks(new_manager);
-
-					//new_creature_renderer.refresh();
-
-					++frames;
-					if (frames % 100 == 0) {
-						swap_type += 1;
-						if (swap_type % 3 == 0) {
-							new_creature_renderer.EnableSkinSwap("dressSword", true);
-						}
-						else if (swap_type % 3 == 1) {
-							//new_creature_renderer.EnableSkinSwap("defaultGun", true);										
-						}
-						else if (swap_type % 3 == 2) {
-							//new_creature_renderer.EnableSkinSwap("cape", true);					
-						}
-					}
-					new_creature_renderer.UpdateData();
-					requestAnimationFrame(animateScene);
-					renderer.render(scene, camera);
-				};
-
-
 				// Now, call the initScene function that you just finished creating
 				var data = initScene(canvas, engine);
 
 				// Create creature renderer
-				var new_creature_renderer = new CreatureBabylonRenderer("CreatureRenderer",
+				new_creature_renderer = new CreatureBabylonRenderer("CreatureRenderer",
 					data.scene, new_manager,
 					data.creature_texture);
 
@@ -183,12 +116,80 @@
 				window.addEventListener("resize", function () {
 					engine.resize();
 				});
-		initScene();
-		animateScene();
-	}
-};
-xobj.send(null);
+			// This begins the creation of a function that we will 'call' just after it's built
+			//initScene();
+			animateScene();
+			}
+		};
+		xobj.send(null);
 
+		var initScene = function (canvas, engine) {
+
+			// Now create a basic Babylon Scene object 
+			var scene = new BABYLON.Scene(engine);
+			scene.clearColor = new BABYLON.Color3(0.26, 0.26, 0.26);
+
+			// This creates and positions a free camera
+			var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 0, -25), scene);
+
+			// This targets the camera to scene origin
+			camera.setTarget(new BABYLON.Vector3.Zero());
+
+			// This attaches the camera to the canvas
+			camera.attachControl(canvas, false);
+
+			// This creates a light, aiming 0,1,0 - to the sky.
+			var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
+
+			// Dim the light a small amount
+			light.intensity = 0;
+
+			// creature
+			var creature_texture = new BABYLON.StandardMaterial("creatureTexture", scene);
+
+			//creature_texture.emissiveColor = new BABYLON.Color3(1, 1, 1);
+			creature_texture.diffuseTexture = new BABYLON.Texture("../../../../gfx/char/spyGirl/spyGirl.png", scene);
+			creature_texture.diffuseTexture.hasAlpha = true;
+			// Smooth alpha:
+			creature_texture.useAlphaFromDiffuseTexture = true;
+			creature_texture.emissiveTexture = new BABYLON.Texture("../../../../gfx/char/spyGirl/spyGirl.png", scene);
+			creature_texture.emissiveColor = new BABYLON.Color3(1, 1, 1);
+			creature_texture.backFaceCulling = false;
+
+			// Leave this function
+			return { "scene": scene, "creature_texture": creature_texture };
+
+		};  // End of initScene function
+
+		var frames = -1;
+		var swap_type = 0;
+
+		var animateScene = function () {
+			new_manager.Update(0.05);
+
+			// Fire any events
+			//game_controller.ProcessCallbacks(new_manager);
+
+			//new_creature_renderer.refresh();
+
+			++frames;
+			if (frames % 100 == 0) {
+				swap_type += 1;
+				if (swap_type % 3 == 0) {
+					new_creature_renderer.EnableSkinSwap("dressSword", true);
+				}
+				else if (swap_type % 3 == 1) {
+					//new_creature_renderer.EnableSkinSwap("defaultGun", true);										
+				}
+				else if (swap_type % 3 == 2) {
+					//new_creature_renderer.EnableSkinSwap("cape", true);
+					frames = -1;					
+				}
+			}
+			new_creature_renderer.UpdateData();
+			requestAnimationFrame(animateScene);
+			//renderer.render(scene, camera);
+		};
 	</script>
 
 </body>
