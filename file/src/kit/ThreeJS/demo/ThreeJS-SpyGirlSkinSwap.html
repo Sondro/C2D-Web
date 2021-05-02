@@ -150,6 +150,7 @@
 					new_creature_renderer.renderMesh.scale.x = -1;
 
 				};
+				
 				var frames = -1;
 				var swap_type = 0;
 
@@ -174,17 +175,12 @@
 							//new_creature_renderer.EnableSkinSwap("cape", true);					
 						}
 					}
-
 					new_creature_renderer.UpdateData();
-
 					requestAnimationFrame(animateScene);
-
 					renderer.render(scene, camera);
 				};
-
 				initScene();
 				animateScene();
-
 			}
 		};
 		xobj.send(null);
