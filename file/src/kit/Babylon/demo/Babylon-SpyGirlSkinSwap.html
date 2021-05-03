@@ -57,6 +57,7 @@
 				// for your own purposes
 				return null;
 			});
+			//alert(meta_data);
 
 			// You can also add in your event trigger manually/procedurally from code like this
 			game_controller.AddFrameCallback("cape", "fireEvent1", 30,
@@ -64,8 +65,8 @@
 					console.log("Event callback triggered: " + eventName + " at frame: " + run_time);
 				}
 			);
+			initBabylon();
 		};
-
 
 		xobj.onreadystatechange = function () {			
 			if (xobj.readyState == 4 && xobj.status == "200") {
@@ -75,53 +76,54 @@
 				// Parse JSON string into object
 				var actual_JSON = JSON.parse(response);
 				//document.write("Loaded JSON file: ");
-
+		
 				new_creature = new Creature(actual_JSON, false);
-				xobj2.send(null);
 
 				var new_animation_1 = new CreatureAnimation(actual_JSON, "default", false);
+				xobj2.send(null);
+		};
+		xobj.send(null);
 
-				new_manager = new CreatureManager(new_creature);
-				new_manager.AddAnimation(new_animation_1);
-				new_manager.SetActiveAnimationName("default", false);
-				new_manager.SetShouldLoop(true);
-				new_manager.SetIsPlaying(true);
-				new_manager.RunAtTime(0);
+		var initBabylon = function () {
+			new_manager = new CreatureManager(new_creature);
+			new_manager.AddAnimation(new_animation_1);
+			new_manager.SetActiveAnimationName("default", false);
+			new_manager.SetShouldLoop(true);
+			new_manager.SetIsPlaying(true);
+			new_manager.RunAtTime(0);
 
-				// Get the canvas element from our HTML above
-				var canvas = document.getElementById("renderCanvas");
+			// Get the canvas element from our HTML above
+			var canvas = document.getElementById("renderCanvas");
 
-				// Load the BABYLON 3D engine
-				var engine = new BABYLON.Engine(canvas, true);
+			// Load the BABYLON 3D engine
+			var engine = new BABYLON.Engine(canvas, true);
 
-				// Now, call the initScene function that you just finished creating
-				var data = initScene(canvas, engine);
+			// Now, call the initScene function that you just finished creating
+			var data = initScene(canvas, engine);
 
-				// Create creature renderer
-				new_creature_renderer = new CreatureBabylonRenderer("CreatureRenderer",
-					data.scene, new_manager,
-					data.creature_texture);
+			// Create creature renderer
+			new_creature_renderer = new CreatureBabylonRenderer("CreatureRenderer",
+				data.scene, new_manager,
+				data.creature_texture);
 
-				// Register a render loop to repeatedly render the scene
-				engine.runRenderLoop(function () {
-					new_manager.Update(0.05);
-					new_creature_renderer.UpdateData();
+			// Register a render loop to repeatedly render the scene
+			engine.runRenderLoop(function () {
+				new_manager.Update(0.05);
+				new_creature_renderer.UpdateData();
 
-					//new_creature_renderer.renderMesh.scaling = new BABYLON.Vector3(-1, 1, 1);
+				//new_creature_renderer.renderMesh.scaling = new BABYLON.Vector3(-1, 1, 1);
 
-					data.scene.render();
-				});
+				data.scene.render();
+			});
 
-				// Watch for browser/canvas resize events
-				window.addEventListener("resize", function () {
-					engine.resize();
-				});
-			// This begins the creation of a function that we will 'call' just after it's built
-			//initScene();
+			// Watch for browser/canvas resize events
+			window.addEventListener("resize", function () {
+				engine.resize();
+			});
+		// This begins the creation of a function that we will 'call' just after it's built
 			animateScene();
 			}
 		};
-		xobj.send(null);
 
 		var initScene = function (canvas, engine) {
 
