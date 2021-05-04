@@ -23,6 +23,9 @@ Responsive mini-site with [Live Demos](https://sondro.github.io/C2D-Web/)
 
 
 ## Dev Notes:
+
+### [Original Repo](https://github.com/kestrelm/Creature_WebGL)
+
 Creature Runtimes for Javascript & WebAssembly Frameworks.
 
 The following frameworks are supported:
